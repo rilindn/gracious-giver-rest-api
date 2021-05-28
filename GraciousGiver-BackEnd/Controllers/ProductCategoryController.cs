@@ -58,7 +58,7 @@ namespace GraciousGiver_BackEnd.Controllers
            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
             {
                 myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                using (SqlCommand myCommand = new(query, myCon))
                 {
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader); ;
@@ -67,7 +67,7 @@ namespace GraciousGiver_BackEnd.Controllers
                     myCon.Close();
                 }
             }
-            return new JsonResult("Product Added Successfully!");
+            return new JsonResult("Product Category Added Successfully!");
         }
 
         [HttpPut]
@@ -94,7 +94,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
             }
 
-            return new JsonResult("Product Updated Successfully");
+            return new JsonResult("Product Category Updated Successfully");
         }
 
         [HttpDelete("{id}")]
@@ -120,7 +120,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
             }
 
-            return new JsonResult("Product Deleted Successfully");
+            return new JsonResult("Product Category Deleted Successfully");
         }
     }
 }
