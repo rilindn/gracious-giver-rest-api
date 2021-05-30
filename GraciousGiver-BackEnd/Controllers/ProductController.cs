@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using System.Data.SqlClient;
-using System.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using GraciousGiver_BackEnd.Data;
 using GraciousGiver_BackEnd.Models;
 
 namespace GraciousGiver_BackEnd.Controllers
@@ -15,128 +12,97 @@ namespace GraciousGiver_BackEnd.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
+        private readonly GraciousDbContext _context;
 
-        public ProductController(IConfiguration configuration)
+        public ProductController(GraciousDbContext context)
         {
-            _configuration = configuration;
+            _context = context;
         }
 
+        // GET: api/product
         [HttpGet]
-        public JsonResult Get()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            string query = @"
-                            select * from dbo.Product";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("ProductAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
+            return await _context.Product.ToListAsync();
+        }
 
-                    myReader.Close();
-                    myCon.Close();
+        // GET: api/product/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProduct(int id)
+        {
+            var prod = await _context.Product.FindAsync(id);
+
+            if (prod == null)
+            {
+                return NotFound();
+            }
+
+            return prod;
+        }
+
+        // PUT: api/product/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAplikimi(int id, Product prod)
+        {
+            if (id != prod.ProductId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(prod).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
                 }
             }
 
-            return new JsonResult(table);
+            return NoContent();
         }
 
+        // POST: api/product
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public JsonResult Post(Product prod)
+        public async Task<ActionResult<Product>> PostProduct(Product prod)
         {
-            string query = @"
-                            insert into dbo.Product
-                            values 
-                            (
-                            '" + prod.ProductName + @"',
-                            '" + prod.ProductCategory + @"',
-                            '" + prod.ProductState + @"',
-                            '" + prod.ProductPhoto + @"',
-                            '" + prod.ProductDescription + @"',
-                            '" + prod.ProductLocation + @"',
-                            '" + prod.ProductComment + @"',
-                            )";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("ProductAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
+            _context.Product.Add(prod);
+            await _context.SaveChangesAsync();
 
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult("Product Added Successfully!");
+            return CreatedAtAction("GetAplikimi", new { id = prod.ProductId }, prod);
         }
 
-        [HttpPut]
-        public JsonResult Put(Product prod)
-        {
-            string query = @"
-                    update dbo.ProductCategory set 
-                    ProductName = '" + prod.ProductName + @"',
-                    ProductCategory = '" + prod.ProductCategory + @"',
-                    ProductState = '" + prod.ProductState + @"',
-                    ProductPhoto = '" + prod.ProductPhoto + @"',
-                    ProductDescription = '" + prod.ProductDescription + @"',
-                    ProductLocation = '" + prod.ProductLocation + @"',
-                    ProductComment = '" + prod.ProductComment + @"',
-                    where ProductId = " + prod.ProductId + @" 
-                    ";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("ProductAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
-
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-
-            return new JsonResult("Product Updated Successfully");
-        }
-
+        // DELETE: api/product/5
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
-            string query = @"
-                    delete from dbo.Product
-                    where ProductId = " + id + @" 
-                    ";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("ProductAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            var prod = await _context.Product.FindAsync(id);
+            if (prod == null)
             {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
-
-                    myReader.Close();
-                    myCon.Close();
-                }
+                return NotFound();
             }
 
-            return new JsonResult("Product Deleted Successfully");
+            _context.Product.Remove(prod);
+            await _context.SaveChangesAsync();
+
+            return prod;
+        }
+
+        private bool ProductExists(int id)
+        {
+            return _context.Product.Any(e => e.ProductId == id);
         }
     }
 }
-

@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using System.Data.SqlClient;
-using System.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using GraciousGiver_BackEnd.Data;
 using GraciousGiver_BackEnd.Models;
 
 namespace GraciousGiver_BackEnd.Controllers
@@ -15,112 +12,98 @@ namespace GraciousGiver_BackEnd.Controllers
     [ApiController]
     public class ProductCategoryController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
+        private readonly GraciousDbContext _context;
 
-        public ProductCategoryController(IConfiguration configuration)
+        public ProductCategoryController(GraciousDbContext context)
         {
-            _configuration = configuration;
+            _context = context;
         }
 
+        // GET: api/ProductCategory
         [HttpGet]
-        public JsonResult Get()
+        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategory()
         {
-            string query = @"
-                            select ProductCategoryId, ProductCategoryName from dbo.ProductCategory";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("ProductAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
+            return await _context.ProductCategory.ToListAsync();
+        }
 
-                    myReader.Close();
-                    myCon.Close();
+        // GET: api/ProductCategory/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductCategory>> GetProductCategory(int id)
+        {
+            var prod = await _context.ProductCategory.FindAsync(id);
+
+            if (prod == null)
+            {
+                return NotFound();
+            }
+
+            return prod;
+        }
+
+        // PUT: api/ProductCategory/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutProduct(int id, ProductCategory prod)
+        {
+            if (id != prod.ProductCategoryId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(prod).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return (IActionResult)prod;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductCategoryExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
                 }
             }
 
-            return new JsonResult(table);
+            return NoContent();
         }
 
+        // POST: api/ProductCategory
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public JsonResult Post(ProductCategory prc)
+        public async Task<ActionResult<ProductCategory>> PostProductCategory(ProductCategory prod)
         {
-            string query=@"
-                            insert into dbo.ProductCategory values 
-                            ('"+prc.ProductCategoryName+@"')";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("ProductAppCon");
-            SqlDataReader myReader;
-           using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
+            _context.ProductCategory.Add(prod);
+            await _context.SaveChangesAsync();
 
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult("Product Category Added Successfully!");
+            return CreatedAtAction("GetAplikimi", new { id = prod.ProductCategoryId }, prod);
         }
 
-        [HttpPut]
-        public JsonResult Put(ProductCategory prc)
-        {
-            string query = @"
-                    update dbo.ProductCategory set 
-                    ProductCategoryName = '"+prc.ProductCategoryName+@"'
-                    where ProductCategoryId = "+prc.ProductCategoryId + @" 
-                    ";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("ProductAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
-
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-
-            return new JsonResult("Product Category Updated Successfully");
-        }
-
+        // DELETE: api/ProductCategory/5
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<ActionResult<ProductCategory>> DeleteProductCategory(int id)
         {
-            string query = @"
-                    delete from dbo.ProductCategory
-                    where ProductCategoryId = " + id + @" 
-                    ";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("ProductAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            var prod = await _context.ProductCategory.FindAsync(id);
+            if (prod == null)
             {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
-
-                    myReader.Close();
-                    myCon.Close();
-                }
+                return NotFound();
             }
 
-            return new JsonResult("Product Category Deleted Successfully");
+            _context.ProductCategory.Remove(prod);
+            await _context.SaveChangesAsync();
+
+            return prod;
+        }
+
+        private bool ProductCategoryExists(int id)
+        {
+            return _context.ProductCategory.Any(e => e.ProductCategoryId == id);
         }
     }
 }

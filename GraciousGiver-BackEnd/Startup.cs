@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
-
+using GraciousGiver_BackEnd.Data;
+using Microsoft.EntityFrameworkCore;
 namespace WebAPI
 {
     public class Startup
@@ -27,6 +28,8 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<GraciousDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ProductAppCon")));
             //Enable CORS
             services.AddCors(c =>
             {
