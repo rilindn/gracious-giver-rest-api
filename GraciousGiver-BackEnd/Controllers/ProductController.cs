@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GraciousGiver_BackEnd.Data;
 using GraciousGiver_BackEnd.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System;
 
 namespace GraciousGiver_BackEnd.Controllers
 {
@@ -13,6 +16,7 @@ namespace GraciousGiver_BackEnd.Controllers
     public class ProductController : ControllerBase
     {
         private readonly GraciousDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
         public ProductController(GraciousDbContext context)
         {
@@ -81,7 +85,7 @@ namespace GraciousGiver_BackEnd.Controllers
             _context.Product.Add(prod);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAplikimi", new { id = prod.ProductId }, prod);
+            return CreatedAtAction("GetProduct", new { id = prod.ProductId }, prod);
         }
 
         // DELETE: api/product/5
@@ -100,9 +104,34 @@ namespace GraciousGiver_BackEnd.Controllers
             return prod;
         }
 
+
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.ProductId == id);
+        }
+
+        [Route("SaveFile")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+                return new JsonResult("prodImg.jpg");
+            }
         }
     }
 }

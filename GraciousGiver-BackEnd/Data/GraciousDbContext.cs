@@ -12,9 +12,11 @@ namespace GraciousGiver_BackEnd.Data
         public GraciousDbContext(DbContextOptions<GraciousDbContext> options ): base (options)
         {
                 
+
         }
 
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Product> Product { get; set; }
+        public DbSet<ProductPhotos> ProductPhotos { get; set; }
     }
 }

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace GraciousGiver_BackEnd.Models
 {
-    public class ProductCategory
+    public class ProductPhotos
     {
         [Key]
-        public int ProductCategoryId { get; set; }
+        public int PhotoId { get; set; }
+        public int Product { get; set; }
 
-        public String ProductCategoryName { get; set; }
+        public String ProductPhotoPath { get; set; }
     }
 }

@@ -82,7 +82,7 @@ namespace GraciousGiver_BackEnd.Controllers
             _context.ProductCategory.Add(prod);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAplikimi", new { id = prod.ProductCategoryId }, prod);
+            return CreatedAtAction("GetCategory", new { id = prod.ProductCategoryId }, prod);
         }
 
         // DELETE: api/ProductCategory/5
