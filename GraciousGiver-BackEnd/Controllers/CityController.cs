@@ -10,27 +10,27 @@ namespace GraciousGiver_BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QytetiController : ControllerBase
+    public class CityController : ControllerBase
     {
         private readonly GraciousDbContext _context;
 
-        public QytetiController(GraciousDbContext context)
+        public CityController(GraciousDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Qyteti
+        // GET: api/City
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Qyteti>>> GetQyteti()
+        public async Task<ActionResult<IEnumerable<City>>> GetCity()
         {
-            return await _context.Qyteti.ToListAsync();
+            return await _context.City.ToListAsync();
         }
 
-        // GET: api/Qyteti/5
+        // GET: api/City/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Qyteti>> GetQyteti(int id)
+        public async Task<ActionResult<City>> GetCity(int id)
         {
-            var prod = await _context.Qyteti.FindAsync(id);
+            var prod = await _context.City.FindAsync(id);
 
             if (prod == null)
             {
@@ -40,11 +40,11 @@ namespace GraciousGiver_BackEnd.Controllers
             return prod;
         }
 
-        // PUT: api/Qyteti/5
+        // PUT: api/City/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Qyteti prod)
+        public async Task<IActionResult> PutCity(int id, City prod)
         {
             if (id != prod.CityId)
             {
@@ -56,11 +56,11 @@ namespace GraciousGiver_BackEnd.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                return (IActionResult)prod;
+                
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!QytetiExists(id))
+                if (!CityExists(id))
                 {
                     return NotFound();
                 }
@@ -70,40 +70,42 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
             }
 
-            return NoContent();
+            return new JsonResult("City Updated Succesfully!");
         }
 
-        // POST: api/Qyteti
+        // POST: api/City
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Qyteti>> PostQyteti(Qyteti prod)
+        public async Task<ActionResult<City>> PostCity(City prod)
         {
-            _context.Qyteti.Add(prod);
+            _context.City.Add(prod);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategory", new { id = prod.CityId }, prod);
+            // return CreatedAtAction("GetCity", new { id = prod.CityId }, prod);
+
+            return new JsonResult("City Posted Succesfully!");
         }
 
-        // DELETE: api/Qyteti/5
+        // DELETE: api/City/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Qyteti>> DeleteQyteti(int id)
+        public async Task<ActionResult<City>> DeleteCity(int id)
         {
-            var prod = await _context.Qyteti.FindAsync(id);
+            var prod = await _context.City.FindAsync(id);
             if (prod == null)
             {
                 return NotFound();
             }
 
-            _context.Qyteti.Remove(prod);
+            _context.City.Remove(prod);
             await _context.SaveChangesAsync();
 
-            return prod;
+            return new JsonResult("City Deleted  Succesfully!");
         }
 
-        private bool QytetiExists(int id)
+        private bool CityExists(int id)
         {
-            return _context.Qyteti.Any(e => e.CityId == id);
+            return _context.City.Any(e => e.CityId == id);
         }
     }
 }

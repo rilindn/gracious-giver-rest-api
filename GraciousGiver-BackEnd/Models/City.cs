@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraciousGiver_BackEnd.Models
 {
-    public class Qyteti     
+    public class City     
     {
         [Key]
         public int CityId { get; set; }

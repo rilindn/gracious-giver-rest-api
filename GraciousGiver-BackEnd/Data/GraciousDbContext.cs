@@ -14,7 +14,7 @@ namespace GraciousGiver_BackEnd.Data
                 
 
         }
-        public DbSet<Qyteti> Qyteti { get; set; }
+        public DbSet<City> City { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductPhotos> ProductPhotos { get; set; }

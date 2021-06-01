@@ -41,3 +41,5 @@ insert into ProductCategory values('Food')
 
 insert into Product values('Boots','Clothes','good','sad','nice','Ferizaj','none','1234')
 
+insert into City values ('Gjilan')
+
