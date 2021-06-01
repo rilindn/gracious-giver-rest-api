@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GraciousGiver_BackEnd.Models
 {
-    public class Shteti : Controller
+    public class Shteti 
     {
             [Key]
             public int ShtetiId { get; set; }
