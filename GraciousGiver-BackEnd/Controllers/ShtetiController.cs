@@ -44,7 +44,7 @@ namespace GraciousGiver_BackEnd.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Shteti prod)
+        public async Task<IActionResult> PutShteti(int id, Shteti prod)
         {
             if (id != prod.ShtetiId)
             {
@@ -56,7 +56,7 @@ namespace GraciousGiver_BackEnd.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                return (IActionResult)prod;
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -70,7 +70,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
             }
 
-            return NoContent();
+            return new JsonResult("Shteti Updated Succesfully!");
         }
 
         // POST: api/Shteti
@@ -82,7 +82,9 @@ namespace GraciousGiver_BackEnd.Controllers
             _context.Shteti.Add(prod);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategory", new { id = prod.ShtetiId }, prod);
+            // return CreatedAtAction("GetShteti", new { id = prod.ShtetiId }, prod);
+
+            return new JsonResult("Shteti Posted Succesfully!");
         }
 
         // DELETE: api/Shteti/5
@@ -98,7 +100,7 @@ namespace GraciousGiver_BackEnd.Controllers
             _context.Shteti.Remove(prod);
             await _context.SaveChangesAsync();
 
-            return prod;
+            return new JsonResult("Shteti Deleted  Succesfully!");
         }
 
         private bool ShtetiExists(int id)

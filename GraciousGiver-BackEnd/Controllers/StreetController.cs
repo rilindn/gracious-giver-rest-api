@@ -44,7 +44,7 @@ namespace GraciousGiver_BackEnd.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Street prod)
+        public async Task<IActionResult> PutStreet(int id, Street prod)
         {
             if (id != prod.StreetId)
             {
@@ -56,7 +56,7 @@ namespace GraciousGiver_BackEnd.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                return (IActionResult)prod;
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -70,7 +70,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
             }
 
-            return NoContent();
+            return new JsonResult("Street Updated Succesfully!");
         }
 
         // POST: api/Street
@@ -82,7 +82,9 @@ namespace GraciousGiver_BackEnd.Controllers
             _context.Street.Add(prod);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategory", new { id = prod.StreetId }, prod);
+            // return CreatedAtAction("GetStreet", new { id = prod.StreetId }, prod);
+
+            return new JsonResult("Street Posted Succesfully!");
         }
 
         // DELETE: api/Street/5
@@ -98,7 +100,7 @@ namespace GraciousGiver_BackEnd.Controllers
             _context.Street.Remove(prod);
             await _context.SaveChangesAsync();
 
-            return prod;
+            return new JsonResult("Street Deleted  Succesfully!");
         }
 
         private bool StreetExists(int id)
