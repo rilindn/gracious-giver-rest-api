@@ -18,9 +18,10 @@ namespace GraciousGiver_BackEnd.Controllers
         private readonly GraciousDbContext _context;
         private readonly IWebHostEnvironment _env;
 
-        public ProductController(GraciousDbContext context)
+        public ProductController(GraciousDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: api/product

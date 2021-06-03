@@ -17,7 +17,6 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductPhotos> ProductPhotos { get; set; }
         public DbSet<Shteti> Shteti { get; set; }
-
         public DbSet<Street> Street { get; set; }
     }
 }
