@@ -31,6 +31,7 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.Product.ToListAsync();
         }
 
+
         // GET: api/product/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
@@ -43,6 +44,12 @@ namespace GraciousGiver_BackEnd.Controllers
             }
 
             return prod;
+        }
+
+        [HttpGet("{amount}/{nr}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByAmount(int nr)
+        {
+            return await _context.Product.Take(nr).ToListAsync();
         }
 
         // PUT: api/product/5
@@ -131,7 +138,7 @@ namespace GraciousGiver_BackEnd.Controllers
             }
             catch (Exception)
             {
-                return new JsonResult("prodImg.jpg");
+                throw;
             }
         }
     }
