@@ -18,5 +18,6 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<ProductPhotos> ProductPhotos { get; set; }
         public DbSet<Shteti> Shteti { get; set; }
         public DbSet<Street> Street { get; set; }
+        public DbSet<GG_Admin> GG_Admin { get; set; }
     }
 }
