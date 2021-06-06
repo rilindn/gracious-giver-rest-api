@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GraciousGiver_BackEnd.Data;
 using GraciousGiver_BackEnd.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System;
 
 namespace GraciousGiver_BackEnd.Controllers
 {
@@ -38,6 +41,13 @@ namespace GraciousGiver_BackEnd.Controllers
             }
 
             return prod;
+        }
+
+        //amount
+        [HttpGet("{amount}/{nr}")]
+        public async Task<ActionResult<IEnumerable<City>>> GetCityByAmount(int nr)
+        {
+            return await _context.City.Take(nr).ToListAsync();
         }
 
         // PUT: api/City/5
