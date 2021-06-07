@@ -14,6 +14,8 @@ using System.IO;
 using Microsoft.Extensions.FileProviders;
 using GraciousGiver_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
+using GraciousGiver_BackEnd.Helpers;
+
 namespace WebAPI
 {
     public class Startup
@@ -30,6 +32,10 @@ namespace WebAPI
         {
             services.AddDbContext<GraciousDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ProductAppCon")));
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<JwtService>();
+
             //Enable CORS
             services.AddCors(c =>
             {
@@ -53,12 +59,17 @@ namespace WebAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(options => options
+             .WithOrigins(new[] { "http://localhost:3000", "http://localhost:3001" })
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+            );
 
             app.UseRouting();
 

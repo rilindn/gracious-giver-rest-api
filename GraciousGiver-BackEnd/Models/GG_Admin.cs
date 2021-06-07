@@ -24,10 +24,10 @@ namespace GraciousGiver_BackEnd.Models
         }
         [Key]
         public int AdminId { get; set; }
-
-        [DataType(DataType.Password)]
         public String AdminName { get; set; }
 
+
+        [DataType(DataType.Password)]
         public Byte[] AdminPassword { get; set; }
         public String AdminEmail { get; set; }
 

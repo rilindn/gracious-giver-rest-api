@@ -1,4 +1,5 @@
 ﻿using GraciousGiver_BackEnd.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GraciousGiver_BackEnd.Data
 {
-    public class GraciousDbContext: DbContext
+    public class GraciousDbContext : DbContext
     {
         public GraciousDbContext(DbContextOptions<GraciousDbContext> options ): base (options)
         {
@@ -20,6 +21,12 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Street> Street { get; set; }
         public DbSet<GG_Admin> GG_Admin { get; set; }
 
-        public DbSet<DM_User> DM_User { get; set; }
+        public DbSet<User> Users { get; set; }
+        public object User { get; internal set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.UserName).IsUnique(); });
+        }
     }
 }

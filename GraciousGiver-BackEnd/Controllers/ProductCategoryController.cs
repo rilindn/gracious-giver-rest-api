@@ -40,6 +40,12 @@ namespace GraciousGiver_BackEnd.Controllers
             return prod;
         }
 
+        [HttpGet("{amount}/{nr}")]
+        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategoriesByAmount(int nr)
+        {
+            return await _context.ProductCategory.Take(nr).ToListAsync();
+        }
+
         // PUT: api/ProductCategory/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

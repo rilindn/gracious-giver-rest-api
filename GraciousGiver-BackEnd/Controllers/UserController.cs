@@ -6,30 +6,30 @@ using Microsoft.EntityFrameworkCore;
 using GraciousGiver_BackEnd.Data;
 using GraciousGiver_BackEnd.Models;
 
+
 namespace GraciousGiver_BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DM_UserController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly GraciousDbContext _context;
-
-        public DM_UserController(GraciousDbContext context)
+        public UserController(GraciousDbContext context)
         {
             _context = context;
         }
 
-               [HttpGet]
-        public async Task<ActionResult<IEnumerable<DM_User>>> GetDM_User()
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.DM_User.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
   
         [HttpGet("{id}")]
-        public async Task<ActionResult<DM_User>> GetDM_User(int id)
+        public async Task<ActionResult<User>> GetDM_User(int id)
         {
-            var prod = await _context.DM_User.FindAsync(id);
+            var prod = await _context.Users.FindAsync(id);
 
             if (prod == null)
             {
@@ -39,9 +39,15 @@ namespace GraciousGiver_BackEnd.Controllers
             return prod;
         }
 
-     
+        [HttpGet("{amount}/{nr}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersByAmount(int nr)
+        {
+            return await _context.Users.Take(nr).ToListAsync();
+        }
+
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDM_User(int id, DM_User prod)
+        public async Task<IActionResult> PutDM_User(int id, User prod)
         {
             if (id != prod.UserId)
             {
@@ -71,27 +77,26 @@ namespace GraciousGiver_BackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<DM_User>> PostDM_User(DM_User prod)
+        public async Task<ActionResult<User>> PostDM_User(User user)
         {
-            _context.DM_User.Add(prod);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-      
 
-            return new JsonResult("User Posted Succesfully!");
+            return new JsonResult("New User registered Succesfully!");
         }
 
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<DM_User>> DeleteDM_User(int id)
+        public async Task<ActionResult<User>> DeleteDM_User(int id)
         {
-            var prod = await _context.DM_User.FindAsync(id);
-            if (prod == null)
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            _context.DM_User.Remove(prod);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return new JsonResult("User Deleted  Succesfully!");
@@ -99,7 +104,7 @@ namespace GraciousGiver_BackEnd.Controllers
 
         private bool DM_UserExists(int id)
         {
-            return _context.DM_User.Any(e => e.UserId == id);
+            return _context.Users.Any(e => e.UserId == id);
         }
     }
 }
