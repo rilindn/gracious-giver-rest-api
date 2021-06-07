@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GraciousGiver_BackEnd.Data;
 using GraciousGiver_BackEnd.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System;
 
 namespace GraciousGiver_BackEnd.Controllers
 {
@@ -40,8 +43,14 @@ namespace GraciousGiver_BackEnd.Controllers
             return prod;
         }
 
+<<<<<<< HEAD
         [HttpGet("{amount}/{nr}")]
         public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategoriesByAmount(int nr)
+=======
+        //amount
+        [HttpGet("{amount}/{nr}")]
+        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategByAmount(int nr)
+>>>>>>> 132fd9987dbc9c0977e259017951e35c25bcf7ea
         {
             return await _context.ProductCategory.Take(nr).ToListAsync();
         }

@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GraciousGiver_BackEnd.Data;
 using GraciousGiver_BackEnd.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System;
 
 
 namespace GraciousGiver_BackEnd.Controllers
@@ -40,12 +43,22 @@ namespace GraciousGiver_BackEnd.Controllers
         }
 
         [HttpGet("{amount}/{nr}")]
+<<<<<<< HEAD:GraciousGiver-BackEnd/Controllers/UserController.cs
         public async Task<ActionResult<IEnumerable<User>>> GetUsersByAmount(int nr)
         {
             return await _context.Users.Take(nr).ToListAsync();
         }
 
 
+=======
+        public async Task<ActionResult<IEnumerable<DM_User>>> GetUsersByAmount(int nr)
+        {
+            return await _context.DM_User.Take(nr).ToListAsync();
+        }
+
+
+
+>>>>>>> 132fd9987dbc9c0977e259017951e35c25bcf7ea:GraciousGiver-BackEnd/Controllers/DM_UserController.cs
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDM_User(int id, User prod)
         {
