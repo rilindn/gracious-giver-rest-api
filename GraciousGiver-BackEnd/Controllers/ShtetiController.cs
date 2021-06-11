@@ -40,14 +40,9 @@ namespace GraciousGiver_BackEnd.Controllers
             return prod;
         }
 
-<<<<<<< HEAD
-        [HttpGet("{amount}/{nr}")]
-        public async Task<ActionResult<IEnumerable<Shteti>>> GetStatessByAmount(int nr)
-=======
         //amount
         [HttpGet("{amount}/{nr}")]
         public async Task<ActionResult<IEnumerable<Shteti>>> GetStateByAmount(int nr)
->>>>>>> 132fd9987dbc9c0977e259017951e35c25bcf7ea
         {
             return await _context.Shteti.Take(nr).ToListAsync();
         }

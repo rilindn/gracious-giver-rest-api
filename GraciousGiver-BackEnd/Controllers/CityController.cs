@@ -43,14 +43,8 @@ namespace GraciousGiver_BackEnd.Controllers
             return prod;
         }
 
-<<<<<<< HEAD
         [HttpGet("{amount}/{nr}")]
-        public async Task<ActionResult<IEnumerable<City>>> GetProductCitiesByAmount(int nr)
-=======
-        //amount
-        [HttpGet("{amount}/{nr}")]
-        public async Task<ActionResult<IEnumerable<City>>> GetCityByAmount(int nr)
->>>>>>> 132fd9987dbc9c0977e259017951e35c25bcf7ea
+        public async Task<ActionResult<IEnumerable<City>>> GetCitiesByAmount(int nr)
         {
             return await _context.City.Take(nr).ToListAsync();
         }
