@@ -54,7 +54,7 @@ namespace GraciousGiver_BackEnd.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, ProductCategory prod)
+        public async Task<ActionResult<ProductCategory>> PutProduct(int id, ProductCategory prod)
         {
             if (id != prod.ProductCategoryId)
             {
@@ -66,7 +66,7 @@ namespace GraciousGiver_BackEnd.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                return (IActionResult)prod;
+                return prod;
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -89,10 +89,17 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<ProductCategory>> PostProductCategory(ProductCategory prod)
         {
-            _context.ProductCategory.Add(prod);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.ProductCategory.Add(prod);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategory", new { id = prod.ProductCategoryId }, prod);
+                return CreatedAtAction("GetProductCategory", new { id = prod.ProductCategoryId }, prod);
+            }
+            catch(Exception e)
+            {
+                throw;
+            }
         }
 
         // DELETE: api/ProductCategory/5

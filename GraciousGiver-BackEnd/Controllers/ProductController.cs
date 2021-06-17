@@ -45,8 +45,21 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return prod;
         }
+        
+        [HttpGet("last")]
+        public async Task<ActionResult<Product>> GetLastProduct()
+        {
+            var prod = await _context.Product.OrderByDescending(p => p.ProductId).FirstOrDefaultAsync();
 
-        [HttpGet("{amount}/{nr}")]
+            if (prod == null)
+            {
+                return NotFound();
+            }
+
+            return prod;
+        }
+
+        [HttpGet("amount/{nr}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByAmount(int nr)
         {
             return await _context.Product.Take(nr).ToListAsync();

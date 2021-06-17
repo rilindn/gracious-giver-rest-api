@@ -27,9 +27,9 @@ namespace GraciousGiver_BackEnd.Controllers
         }
         // GET: api/product/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductPhotos>> GetProductPhotos(int id)
+        public async Task<ActionResult<IEnumerable<ProductPhotos>>> GetProductPhotos(int id)
         {
-            var prod = await _context.ProductPhotos.FindAsync(id);
+            var prod = await _context.ProductPhotos.Where(p => p.Product == id).ToListAsync();
 
             if (prod == null)
             {
