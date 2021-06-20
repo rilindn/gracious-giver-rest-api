@@ -55,7 +55,14 @@ namespace GraciousGiver_BackEnd.Controllers
         }
 
 
+        [HttpGet("role/{roleName}/amount/{nr}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetAdminByAmount(String roleName, int nr)
+        {
+            return await _context.Users.Where(u => u.UserRole == roleName).Take(nr).ToListAsync();
+        }
 
+  
+      
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDM_User(int id, User prod)
         {
