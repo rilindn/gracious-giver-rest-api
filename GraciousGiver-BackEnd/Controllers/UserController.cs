@@ -48,6 +48,12 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.Users.Take(nr).ToListAsync();
         }
 
+        [HttpGet("role/{roleName}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetAdmins(String roleName)
+        {
+            return await _context.Users.Where(u =>u.UserRole == roleName).ToListAsync();
+        }
+
 
 
         [HttpPut("{id}")]
@@ -89,6 +95,10 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return new JsonResult("New User registered Succesfully!");
         }
+
+
+
+
 
 
         [HttpDelete("{id}")]
