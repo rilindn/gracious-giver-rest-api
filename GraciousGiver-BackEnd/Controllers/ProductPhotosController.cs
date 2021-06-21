@@ -47,5 +47,21 @@ namespace GraciousGiver_BackEnd.Controllers
             return CreatedAtAction("GetProductPhotos", new { id = prod.PhotoId }, prod);
         }
 
+        // DELETE: api/productPhotos/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ProductPhotos>> DeleteProductPhoto(int id)
+        {
+            var prodPhoto = await _context.ProductPhotos.FindAsync(id);
+            if (prodPhoto == null)
+            {
+                return NotFound();
+            }
+
+            _context.ProductPhotos.Remove(prodPhoto);
+            await _context.SaveChangesAsync();
+
+            return prodPhoto;
+        }
+
     }
 }
