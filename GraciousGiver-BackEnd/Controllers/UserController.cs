@@ -48,8 +48,21 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.Users.Take(nr).ToListAsync();
         }
 
+        [HttpGet("role/{roleName}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetAdmins(String roleName)
+        {
+            return await _context.Users.Where(u =>u.UserRole == roleName).ToListAsync();
+        }
 
 
+        [HttpGet("role/{roleName}/amount/{nr}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetAdminByAmount(String roleName, int nr)
+        {
+            return await _context.Users.Where(u => u.UserRole == roleName).Take(nr).ToListAsync();
+        }
+
+  
+      
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDM_User(int id, User prod)
         {
@@ -89,6 +102,10 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return new JsonResult("New User registered Succesfully!");
         }
+
+
+
+
 
 
         [HttpDelete("{id}")]
