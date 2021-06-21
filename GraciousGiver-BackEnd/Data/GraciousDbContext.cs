@@ -10,7 +10,7 @@ namespace GraciousGiver_BackEnd.Data
 {
     public class GraciousDbContext : DbContext
     {
-        public GraciousDbContext(DbContextOptions<GraciousDbContext> options ): base (options)
+        public GraciousDbContext(DbContextOptions<GraciousDbContext> options) : base(options)
         {
         }
         public DbSet<City> City { get; set; }
@@ -20,6 +20,7 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Shteti> Shteti { get; set; }
         public DbSet<Street> Street { get; set; }
         public DbSet<GG_Admin> GG_Admin { get; set; }
+        public DbSet<Product_Request> Product_Request { get; set; }
 
         public DbSet<User> Users { get; set; }
         public object User { get; internal set; }
