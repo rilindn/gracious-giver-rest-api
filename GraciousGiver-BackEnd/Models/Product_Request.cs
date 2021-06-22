@@ -14,9 +14,12 @@ namespace GraciousGiver_BackEnd.Models
         public int ProductId { get; set; }
         public String Message { get; set; }
         public DateTime Request_Date { get; set; }
+
         public int GetReqProductId()
         {
             return ProductId;
         }
     }
+
+
 }

@@ -67,6 +67,25 @@ namespace GraciousGiver_BackEnd.Controllers
             return requests;
         }
 
+        [HttpGet("request/{donatorId}/amount/{nr}")]
+        public async Task<ActionResult<List<Product_Request>>> GetProductDonatorReqByAmount(int donatorId, int nr)
+        {
+            var prodR = await _context.Product_Request.ToListAsync();
+            List<Product_Request> requests = new List<Product_Request>();
+            var count = 0;
+            foreach (Product_Request p in prodR)
+            {
+                var b = VerifyProductDonator(donatorId, p.GetReqProductId());
+
+                if (b.Result.Value == true && count < nr)
+                {
+                    requests.Add(p);
+                    count++;
+                }
+            }
+            return requests;
+        }
+
         //amount
         [HttpGet("{amount}/{nr}")]
         public async Task<ActionResult<IEnumerable<Product_Request>>> GetProduct_RequestByAmount(int nr)
