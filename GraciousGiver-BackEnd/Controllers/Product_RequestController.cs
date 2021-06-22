@@ -3,6 +3,7 @@ using GraciousGiver_BackEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.Product_Request.ToListAsync();
         }
 
+        
+
         // GET: api/Request/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product_Request>> GetProduct_Request(int id)
@@ -39,6 +42,29 @@ namespace GraciousGiver_BackEnd.Controllers
             }
 
             return prod;
+        }
+
+
+        public async Task<ActionResult<bool>> VerifyProductDonator(int donatorId, int productId)
+        {
+            var product = await _context.Product.FindAsync(productId);
+            return product.DonatorId == donatorId;
+        }
+
+        [HttpGet("request/{donatorId}")]
+        public async Task<ActionResult<List<Product_Request>>> GetProductDonator(int donatorId)
+        {
+            var prodR = await _context.Product_Request.ToListAsync();
+            List<Product_Request> requests = new List<Product_Request>();
+            foreach (Product_Request p in prodR)
+            {
+                var b = VerifyProductDonator(donatorId, p.GetReqProductId());
+                if (b.Result.Value==true)
+                {
+                    requests.Add(p);
+                } 
+            }
+            return requests;
         }
 
         //amount
