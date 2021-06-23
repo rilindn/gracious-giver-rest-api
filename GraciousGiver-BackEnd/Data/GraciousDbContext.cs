@@ -21,9 +21,11 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Street> Street { get; set; }
         public DbSet<GG_Admin> GG_Admin { get; set; }
         public DbSet<Product_Request> Product_Request { get; set; }
+        public DbSet<ProductRequestResponse> ProductRequestResponse { get; set; }
 
         public DbSet<User> Users { get; set; }
         public object User { get; internal set; }
+       /* public object ProductRequestResponse { get; internal set; }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
