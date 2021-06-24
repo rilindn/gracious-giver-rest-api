@@ -59,7 +59,7 @@ namespace GraciousGiver_BackEnd.Controllers
             foreach (Product_Request p in prodR)
             {
                 var b = VerifyProductDonator(donatorId, p.GetReqProductId());
-                if (b.Result.Value==true)
+                if (b.Result.Value==true && p.checkedR==false)
                 {
                     requests.Add(p);
                 } 
@@ -77,7 +77,7 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 var b = VerifyProductDonator(donatorId, p.GetReqProductId());
 
-                if (b.Result.Value == true && count < nr)
+                if (b.Result.Value == true && count < nr && p.checkedR == false)
                 {
                     requests.Add(p);
                     count++;

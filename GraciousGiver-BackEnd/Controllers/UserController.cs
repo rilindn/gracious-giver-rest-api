@@ -42,6 +42,7 @@ namespace GraciousGiver_BackEnd.Controllers
             return prod;
         }
 
+
         [HttpGet("{amount}/{nr}")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsersByAmount(int nr)
         {
