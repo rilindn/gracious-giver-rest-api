@@ -4,14 +4,16 @@ using GraciousGiver_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    partial class GraciousDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210625233714_organization")]
+    partial class organization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

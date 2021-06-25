@@ -24,7 +24,7 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Request> Request { get; set; }
         public DbSet<Bookmark> Bookmark { get; set; }
         public DbSet<ProductRequestResponse> ProductRequestResponse { get; set; }
-
+        public DbSet<Organization> Organization { get; set; }
 
 
         public DbSet<User> Users { get; set; }
