@@ -23,6 +23,7 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Product_Request> Product_Request { get; set; }
         public DbSet<Request> Request { get; set; }
         public DbSet<Bookmark> Bookmark { get; set; }
+        public DbSet<OrganizationCategory> OrganizationCategory { get; set; }
         public DbSet<ProductRequestResponse> ProductRequestResponse { get; set; }
 
 
