@@ -79,6 +79,21 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.ToTable("GG_Admin");
                 });
 
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.OrganizationCategory", b =>
+                {
+                    b.Property<int>("OrganizationCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("OrganizationCategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrganizationCategoryId");
+
+                    b.ToTable("OrganizationCategory");
+                });
+
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Organization", b =>
                 {
                     b.Property<int>("OrganizationId")
