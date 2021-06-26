@@ -28,7 +28,7 @@ namespace GraciousGiver_BackEnd.Controllers
         }
 
 
-        // GET: api/Request/5
+        // GET: api/Response/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductRequestResponse>> GetProductRequestResponse(int id)
         {
@@ -49,7 +49,7 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.ProductRequestResponse.Take(nr).ToListAsync();
         }
 
-        // PUT: api/Shteti/5
+        
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
@@ -82,7 +82,7 @@ namespace GraciousGiver_BackEnd.Controllers
             return new JsonResult("Request Updated Succesfully!");
         }
 
-        // POST: api/Request
+        // POST: api/Response
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -96,7 +96,7 @@ namespace GraciousGiver_BackEnd.Controllers
             return new JsonResult("Request Posted Succesfully!");
         }
 
-        // DELETE: api/Request/5
+        // DELETE: api/Response/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<ProductRequestResponse>> DeleteProductRequestResponse(int id)
         {

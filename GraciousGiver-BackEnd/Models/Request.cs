@@ -9,7 +9,7 @@ namespace GraciousGiver_BackEnd.Models
     public class Request
     {
         [Key]
-        public int RequestId { get; set; }
+        public int RequesttId { get; set; }
 
         public String RequestDescription { get; set; }
 
@@ -20,6 +20,8 @@ namespace GraciousGiver_BackEnd.Models
         public String RequestLocation { get; set; }
 
         public String RequestComment { get; set; }
+
+        public String RequestPhoto { get; set; }
 
         public int ReceiverId { get; set; }
     }

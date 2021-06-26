@@ -56,7 +56,7 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Request>> PutRequest(int id, Request re)
         {
-            if (id != re.RequestId)
+            if (id != re.RequesttId)
             {
                 return BadRequest();
             }
@@ -94,7 +94,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 _context.Request.Add(re);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetRequest", new { id = re.RequestId }, re);
+                return CreatedAtAction("GetRequest", new { id = re.RequesttId }, re);
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace GraciousGiver_BackEnd.Controllers
 
         private bool RequestExists(int id)
         {
-            return _context.Request.Any(e => e.RequestId == id);
+            return _context.Request.Any(e => e.RequesttId == id);
         }
     }
 }
