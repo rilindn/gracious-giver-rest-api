@@ -4,14 +4,16 @@ using GraciousGiver_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    partial class GraciousDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210625233714_organization")]
+    partial class organization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,21 +79,6 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.HasKey("AdminId");
 
                     b.ToTable("GG_Admin");
-                });
-
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.OrganizationCategory", b =>
-                {
-                    b.Property<int>("OrganizationCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("OrganizationCategoryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OrganizationCategoryId");
-
-                    b.ToTable("OrganizationCategory");
                 });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Organization", b =>
@@ -203,14 +190,8 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DonatorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("int");
 
                     b.Property<int>("RequestId")
                         .HasColumnType("int");
