@@ -4,19 +4,21 @@ using GraciousGiver_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    partial class GraciousDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210625011935_donatorInResponse")]
+    partial class donatorInResponse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Bookmark", b =>
@@ -77,54 +79,6 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.HasKey("AdminId");
 
                     b.ToTable("GG_Admin");
-                });
-
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.OrganizationCategory", b =>
-                {
-                    b.Property<int>("OrganizationCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("OrganizationCategoryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OrganizationCategoryId");
-
-                    b.ToTable("OrganizationCategory");
-                });
-
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.Organization", b =>
-                {
-                    b.Property<int>("OrganizationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OrganizationId");
-
-                    b.ToTable("Organization");
                 });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Product", b =>
@@ -209,9 +163,6 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RequestId")
                         .HasColumnType("int");
 
@@ -255,11 +206,7 @@ namespace GraciousGiver_BackEnd.Migrations
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Request", b =>
                 {
-<<<<<<< HEAD
-                    b.Property<int>("RequesttId")
-=======
                     b.Property<int>("RequestId")
->>>>>>> ede2ab362c21b73744ce95a7244b9f3d35401970
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -282,14 +229,7 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.Property<string>("RequestName")
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-                    b.Property<string>("RequestPhoto")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RequesttId");
-=======
                     b.HasKey("RequestId");
->>>>>>> ede2ab362c21b73744ce95a7244b9f3d35401970
 
                     b.ToTable("Request");
                 });

@@ -11,7 +11,10 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int ProductRequestResponseId { get; set; }
         public int RequestId { get; set; }
+        public int DonatorId { get; set; }
+        public int ReceiverId { get; set; }
         public String Response { get; set; }
+        public String Message { get; set; }
         public DateTime ResponseDate { get; set; }
     }
 }

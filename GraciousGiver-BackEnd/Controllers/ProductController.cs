@@ -30,6 +30,12 @@ namespace GraciousGiver_BackEnd.Controllers
         {
             return await _context.Product.ToListAsync();
         }
+        
+        [HttpGet("donator/{id}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByDonatorId(int id)
+        {
+            return await _context.Product.Where(p=>p.DonatorId==id).ToListAsync();
+        }
 
 
         // GET: api/product/5
@@ -63,6 +69,12 @@ namespace GraciousGiver_BackEnd.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByAmount(int nr)
         {
             return await _context.Product.Take(nr).ToListAsync();
+        }
+        
+        [HttpGet("amount/{nr}/donator/{id}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByAmountDonator(int nr,int id)
+        {
+            return await _context.Product.Where(p=>p.DonatorId==id).Take(nr).ToListAsync();
         }
 
         // PUT: api/product/5
