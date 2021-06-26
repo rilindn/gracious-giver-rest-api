@@ -41,8 +41,60 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return prod;
         }
+        
+        [HttpGet("donator/{donatorId}")]
+        public async Task<ActionResult<IEnumerable<ProductRequestResponse>>> GetProductRequestResponseByDonatorId(int donatorId)
+        {
+            var resp = await _context.ProductRequestResponse.Where(r=>r.DonatorId== donatorId).ToListAsync();
+            
+            if (resp == null)
+            {
+                return NotFound();
+            }
 
-     //amount
+            return resp;
+        }
+        
+        [HttpGet("amount/{nr}/donator/{donatorId}")]
+        public async Task<ActionResult<IEnumerable<ProductRequestResponse>>> GetProductRequestResponseByDonatorIdAmount(int nr,int donatorId)
+        {
+            var resp = await _context.ProductRequestResponse.Where(r=>r.DonatorId== donatorId).Take(nr).ToListAsync();
+            
+            if (resp == null)
+            {
+                return NotFound();
+            }
+
+            return resp;
+        }
+
+        [HttpGet("receiver/{receiverId}")]
+        public async Task<ActionResult<IEnumerable<ProductRequestResponse>>> GetProductRequestResponseByRequesterId(int receiverId)
+        {
+            var resp = await _context.ProductRequestResponse.Where(r => r.ReceiverId == receiverId).ToListAsync();
+
+            if (resp == null)
+            {
+                return NotFound();
+            }
+
+            return resp;
+        }
+
+        [HttpGet("amount/{nr}/receiver/{receiverId}")]
+        public async Task<ActionResult<IEnumerable<ProductRequestResponse>>> GetProductRequestResponseByReceiverIdAmount(int nr, int receiverId)
+        {
+            var resp = await _context.ProductRequestResponse.Where(r => r.ReceiverId == receiverId).Take(nr).ToListAsync();
+
+            if (resp == null)
+            {
+                return NotFound();
+            }
+
+            return resp;
+        }
+
+        //amount
         [HttpGet("{amount}/{nr}")]
         public async Task<ActionResult<IEnumerable<ProductRequestResponse>>> GetProductRequestResponseByAmount(int nr)
         {

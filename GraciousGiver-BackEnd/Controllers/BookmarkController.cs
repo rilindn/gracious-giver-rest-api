@@ -35,6 +35,18 @@ namespace GraciousGiver_BackEnd.Controllers
         {
             return await _context.Bookmark.Where(u => u.UserId == UserId).ToListAsync();
         }
+        
+        [HttpGet("bookmarked/{UserId}/{productId}")]
+        public async Task<ActionResult<Boolean>> GetBookmarkByUserId(int UserId,int productId)
+        {
+            var bookmark = await _context.Bookmark.Where(u => u.UserId == UserId && u.ProductId == productId).ToListAsync();
+
+            if (bookmark.Capacity==0)
+            {
+                return false;
+            }
+            return true;
+        }
 
 
 
