@@ -79,6 +79,36 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.ToTable("GG_Admin");
                 });
 
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.OfferedProductResponse", b =>
+                {
+                    b.Property<int>("OfferedProductResponseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OfferedProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OfferedProductResponseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Responseid")
+                        .HasColumnType("int");
+
+                    b.HasKey("OfferedProductResponseId");
+
+                    b.ToTable("OfferedProductResponse");
+                });
+
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Organization", b =>
                 {
                     b.Property<int>("OrganizationId")
