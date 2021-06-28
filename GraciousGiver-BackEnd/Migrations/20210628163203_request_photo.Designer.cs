@@ -4,14 +4,16 @@ using GraciousGiver_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    partial class GraciousDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210628163203_request_photo")]
+    partial class request_photo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,42 +169,6 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.HasKey("OrganizationId");
 
                     b.ToTable("Organization");
-                });
-
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.PendingOrganizationsRequest", b =>
-                {
-                    b.Property<int>("OrganizationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Checked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OrganizationId");
-
-                    b.ToTable("PendingOrganizationsRequest");
                 });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Product", b =>

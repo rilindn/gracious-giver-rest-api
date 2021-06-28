@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraciousGiver_BackEnd.Data
 {
-    public class UserRepository:IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly GraciousDbContext _context;
 
@@ -17,7 +17,14 @@ namespace GraciousGiver_BackEnd.Data
         public User Create(User user)
         {
             _context.Users.Add(user);
-            user.UserId =_context.SaveChanges();
+            user.UserId = _context.SaveChanges();
+
+            return user;
+        }
+        public User ChangePsw(User user)
+        {
+            _context.Users.Update(user);
+            user.UserId = _context.SaveChanges();
 
             return user;
         }
@@ -30,7 +37,7 @@ namespace GraciousGiver_BackEnd.Data
         public User GetByUsername(string username)
         {
             return _context.Users.FirstOrDefault(u => u.UserName == username);
-        } 
+        }
         public User GetById(int id)
         {
             return _context.Users.FirstOrDefault(u => u.UserId == id);

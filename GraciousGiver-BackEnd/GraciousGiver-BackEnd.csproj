@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Photos\" />
     <Folder Include="Views\" />
   </ItemGroup>
 

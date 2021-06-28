@@ -143,7 +143,7 @@ namespace GraciousGiver_BackEnd.Controllers
             return _context.Product.Any(e => e.ProductId == id);
         }
 
-        [Route("SaveFile")]
+        [Route("SaveFile/Product")]
         [HttpPost]
         public JsonResult SaveFile()
         {
@@ -152,7 +152,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
                 string filename = postedFile.FileName;
-                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+                var physicalPath = _env.ContentRootPath + "/Photos/ProductPhotos/" + filename;
 
                 using (var stream = new FileStream(physicalPath, FileMode.Create))
                 {

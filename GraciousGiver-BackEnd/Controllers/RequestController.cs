@@ -16,10 +16,12 @@ namespace GraciousGiver_BackEnd.Controllers
     public class RequestController : ControllerBase
     {
         private readonly GraciousDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public RequestController(GraciousDbContext context)
+        public RequestController(GraciousDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: api/Request
@@ -48,6 +50,19 @@ namespace GraciousGiver_BackEnd.Controllers
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestByAmount(int nr)
         {
             return await _context.Request.Take(nr).ToListAsync();
+        }
+
+        [HttpGet("last")]
+        public async Task<ActionResult<Request>> GetLastRequest()
+        {
+            var req = await _context.Request.OrderByDescending(p => p.RequesttId).FirstOrDefaultAsync();
+
+            if (req == null)
+            {
+                return NotFound();
+            }
+
+            return req;
         }
 
         // PUT: api/Request/5
@@ -121,6 +136,30 @@ namespace GraciousGiver_BackEnd.Controllers
         private bool RequestExists(int id)
         {
             return _context.Request.Any(e => e.RequesttId == id);
+        }
+
+        [Route("SaveFile/Request")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/RequestPhotos/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
