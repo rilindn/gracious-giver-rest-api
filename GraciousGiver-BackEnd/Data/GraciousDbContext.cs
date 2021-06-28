@@ -25,16 +25,14 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Bookmark> Bookmark { get; set; }
         public DbSet<ProductRequestResponse> ProductRequestResponse { get; set; }
         public DbSet<Organization> Organization { get; set; }
-
         public DbSet<OfferedProductResponse> OfferedProductResponse { get; set; }
-
         public DbSet<OfferProduct> OfferProduct { get; set; }
-
-
-
+        public DbSet<PendingOrganizationsRequest> PendingOrganizationsRequest { get; set; }
         public DbSet<User> Users { get; set; }
         public object User { get; internal set; }
-       /* public object ProductRequestResponse { get; internal set; }*/
+
+
+        /* public object ProductRequestResponse { get; internal set; }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
