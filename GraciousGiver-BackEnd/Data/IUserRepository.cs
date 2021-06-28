@@ -12,5 +12,6 @@ namespace GraciousGiver_BackEnd.Data
         User GetByUsername(string username);
         User GetById(int id);
         object Generate(int userId);
+        User ChangePsw(User user);
     }
 }

@@ -109,5 +109,39 @@ namespace GraciousGiver_BackEnd.Controllers
                 message = "success"
             });
         }
+        [HttpPost("changepsw")]
+        public IActionResult Login(ChangePswDto dto)
+        {
+            try
+            {
+                var user = _repository.GetByUsername(dto.UserName);
+
+                if (user == null) return BadRequest(new { message = "Invalid credentials" });
+
+                if (!BCrypt.Net.BCrypt.Verify(dto.OldPassword, user.UserPassword))
+                {
+                    return BadRequest(new { message = "Invalid credentials" });
+                }
+                user.UserPassword = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+                _repository.ChangePsw(user);
+
+                var jwt = _jwtService.Generate(user.UserId);
+
+                CookieOptions options = new CookieOptions();
+                options.Expires = DateTime.Now.AddDays(1);
+                options.HttpOnly = true;
+                Response.Cookies.Append("jwt", jwt, options);
+
+                return Ok(new
+                {
+
+                    message = "success"
+                });
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
     }
 }
