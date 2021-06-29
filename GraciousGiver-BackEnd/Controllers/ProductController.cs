@@ -81,32 +81,36 @@ namespace GraciousGiver_BackEnd.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAplikimi(int id, Product prod)
+        public async Task<IActionResult> PutProdukt(int id, Product prod)
         {
             if (id != prod.ProductId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(prod).State = EntityState.Modified;
-
-            try
+            if (ModelState.IsValid)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                _context.Entry(prod).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return new JsonResult("Product updated succesfully!");
+            }
+                return new JsonResult("Invalid product data!");
         }
 
         // POST: api/product
@@ -115,10 +119,14 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product prod)
         {
-            _context.Product.Add(prod);
-            await _context.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                _context.Product.Add(prod);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = prod.ProductId }, prod);
+                return CreatedAtAction("GetProduct", new { id = prod.ProductId }, prod);
+            }
+            return new JsonResult("Invalid product data!");
         }
 
         // DELETE: api/product/5

@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace GraciousGiver_BackEnd.Models
 {
-    public class RequestPhotos
+    public class OrganizationCategory
     {
         [Key]
-        public int PhotoId { get; set; }
-        [Required]
-        public int Request { get; set; }
-        [Required]
-        public String RequestPhotoPath { get; set; }
+        public int OrganizationCategoryId { get; set; }
+
+        public String OrganizationCategoryName { get; set; }
     }
 }

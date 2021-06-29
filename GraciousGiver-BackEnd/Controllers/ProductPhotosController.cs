@@ -41,12 +41,15 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<ProductPhotos>> PostProductPhotos(ProductPhotos prod)
         {
-            _context.ProductPhotos.Add(prod);
-            await _context.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                _context.ProductPhotos.Add(prod);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProductPhotos", new { id = prod.PhotoId }, prod);
-        }
-
+                return CreatedAtAction("GetProductPhotos", new { id = prod.PhotoId }, prod);
+            }
+            return new JsonResult("Invalid product photo data!");
+    }
         // DELETE: api/productPhotos/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<ProductPhotos>> DeleteProductPhoto(int id)

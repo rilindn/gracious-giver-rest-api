@@ -41,11 +41,15 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<RequestPhotos>> PostRequestPhotos(RequestPhotos prod)
         {
-            _context.RequestPhotos.Add(prod);
+            if (ModelState.IsValid)
+            {
+                _context.RequestPhotos.Add(prod);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRequestPhotos", new { id = prod.PhotoId }, prod);
         }
+            return new JsonResult("Invalid request photo data!");
+       }
 
         // DELETE: api/RequestPhotos/5
         [HttpDelete("{id}")]
