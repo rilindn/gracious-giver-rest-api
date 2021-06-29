@@ -97,11 +97,14 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostDM_User(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+                return new JsonResult("New User registered Succesfully!");
+            }
+            return new JsonResult("Invalid user data!");
 
-
-            return new JsonResult("New User registered Succesfully!");
         }
 
 
