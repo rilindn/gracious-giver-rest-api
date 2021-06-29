@@ -4,14 +4,16 @@ using GraciousGiver_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    partial class GraciousDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210628145832_PendingOrganizationsRequests")]
+    partial class PendingOrganizationsRequests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -362,24 +364,6 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.HasKey("RequesttId");
 
                     b.ToTable("Request");
-                });
-
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.RequestPhotos", b =>
-                {
-                    b.Property<int>("PhotoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Request")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RequestPhotoPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PhotoId");
-
-                    b.ToTable("RequestPhotos");
                 });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Shteti", b =>
