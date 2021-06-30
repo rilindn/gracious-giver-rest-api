@@ -93,18 +93,19 @@ namespace GraciousGiver_BackEnd.Controllers
             if (ModelState.IsValid)
             {
                 try
-            {
-                _context.OrganizationCategory.Add(prod);
-                await _context.SaveChangesAsync();
+                {
+                    _context.OrganizationCategory.Add(prod);
+                    await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetOrganizationCategory", new { id = prod.OrganizationCategoryId }, prod);
-            }
-            catch (Exception e)
-            {
-                throw;
+                    return CreatedAtAction("GetOrganizationCategory", new { id = prod.OrganizationCategoryId }, prod);
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
             }
                 return new JsonResult("Invalid category data!");
-            }
+            
         }
 
         // DELETE: api/OrganizationCategory/5

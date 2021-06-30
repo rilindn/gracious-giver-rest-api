@@ -15,7 +15,7 @@ namespace GraciousGiver_BackEnd.Models
         [Required]
         public int ReceiverId { get; set; }
         [Required]
-        [RegularExpression(@"/[a-zA-Z0-9]{10,150}$/", ErrorMessage = "Message must be between 10 and 150 chars!")]
+        [RegularExpression(@"[a-zA-Z0-9]{10,150}$", ErrorMessage = "Message must be between 10 and 150 chars!")]
         public string Message { get; set; }
         [Required]
         public DateTime Offerdate { get; set; }
