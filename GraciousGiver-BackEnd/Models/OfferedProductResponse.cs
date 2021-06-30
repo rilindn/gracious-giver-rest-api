@@ -11,6 +11,8 @@ namespace GraciousGiver_BackEnd.Models
     {
         [Key]
         public int OfferedProductResponseId { get; set; }
+
+        public String OfferedProductResponseName { get; set; }
         
         public int Responseid { get; set; }
 
