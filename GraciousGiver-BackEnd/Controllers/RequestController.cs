@@ -75,46 +75,53 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(re).State = EntityState.Modified;
-
-            try
+            if (ModelState.IsValid)
             {
-                await _context.SaveChangesAsync();
-                return re;
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RequestExists(id))
+                _context.Entry(re).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
+                    return re;
                 }
-                else
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RequestExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return new JsonResult("Request updated succesfully!");
+            }
+                return new JsonResult("Invalid request data!");
+        }
+            // POST: api/Request
+            // To protect from overposting attacks, enable the specific properties you want to bind to, for
+            // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+            [HttpPost]
+        public async Task<ActionResult<Request>> PostRequest(Request re)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Request.Add(re);
+                    await _context.SaveChangesAsync();
+
+                    return CreatedAtAction("GetRequest", new { id = re.RequesttId }, re);
+                }
+                catch (Exception e)
                 {
                     throw;
                 }
             }
-
-            return NoContent();
-        }
-
-        // POST: api/Request
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Request>> PostRequest(Request re)
-        {
-            try
-            {
-                _context.Request.Add(re);
-                await _context.SaveChangesAsync();
-
-                return CreatedAtAction("GetRequest", new { id = re.RequesttId }, re);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            return new JsonResult("Invalid request data!");
         }
 
         // DELETE: api/Request/5

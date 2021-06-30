@@ -60,8 +60,10 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 return BadRequest();
             }
+            if (ModelState.IsValid)
+            {
 
-            _context.Entry(prod).State = EntityState.Modified;
+                _context.Entry(prod).State = EntityState.Modified;
 
             try
             {
@@ -80,8 +82,11 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
             }
 
-            return NoContent();
+                return new JsonResult("Product category updated succesfully!");
+            }
+                return new JsonResult("Invalid product category data!");
         }
+
 
         // POST: api/ProductCategory
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -89,17 +94,22 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<ProductCategory>> PostProductCategory(ProductCategory prod)
         {
-            try
+            if (ModelState.IsValid)
             {
-                _context.ProductCategory.Add(prod);
-                await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetProductCategory", new { id = prod.ProductCategoryId }, prod);
+                try
+                {
+                    _context.ProductCategory.Add(prod);
+                    await _context.SaveChangesAsync();
+
+                    return CreatedAtAction("GetProductCategory", new { id = prod.ProductCategoryId }, prod);
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
             }
-            catch(Exception e)
-            {
-                throw;
-            }
+            return new JsonResult("Invalid product category data!");
         }
 
         // DELETE: api/ProductCategory/5
