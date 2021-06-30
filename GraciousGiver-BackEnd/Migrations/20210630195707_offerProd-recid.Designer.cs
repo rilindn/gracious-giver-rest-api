@@ -4,14 +4,16 @@ using GraciousGiver_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    partial class GraciousDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210630195707_offerProd-recid")]
+    partial class offerProdrecid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,9 +94,6 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OfferProductId")
-                        .HasColumnType("int");
-
                     b.Property<int>("OfferedProductId")
                         .HasColumnType("int");
 
@@ -108,6 +107,9 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Responseid")
                         .HasColumnType("int");
 
                     b.HasKey("OfferedProductResponseId");

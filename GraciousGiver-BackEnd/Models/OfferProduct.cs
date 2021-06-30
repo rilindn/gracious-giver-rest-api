@@ -10,7 +10,7 @@ namespace GraciousGiver_BackEnd.Models
     {
         [Key]
         public int OfferProductId { get; set; }
-        [Required]
+
         public int ProductProviderId { get; set; }
         [Required]
         public int ReceiverId { get; set; }

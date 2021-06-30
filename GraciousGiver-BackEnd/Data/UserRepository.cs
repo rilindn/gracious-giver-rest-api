@@ -21,6 +21,13 @@ namespace GraciousGiver_BackEnd.Data
 
             return user;
         }
+        public Organization CreateOrg(Organization org)
+        {
+            _context.Organization.Add(org);
+            org.OrganizationId = _context.SaveChanges();
+
+            return org;
+        }
         public User ChangePsw(User user)
         {
             _context.Users.Update(user);
@@ -38,9 +45,17 @@ namespace GraciousGiver_BackEnd.Data
         {
             return _context.Users.FirstOrDefault(u => u.UserName == username);
         }
+        public Organization GetOrgByUsername(string username)
+        {
+            return _context.Organization.FirstOrDefault(u => u.Username == username);
+        }
         public User GetById(int id)
         {
             return _context.Users.FirstOrDefault(u => u.UserId == id);
+        }
+        public Organization GetOrgById(int id)
+        {
+            return _context.Organization.FirstOrDefault(u => u.OrganizationId == id);
         }
     }
 }
