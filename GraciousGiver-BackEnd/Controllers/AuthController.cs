@@ -31,6 +31,8 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 var user = new User
                 {
+                    Firstname = dto.Firstname,
+                    Lastname = dto.Lastname,
                     UserName = dto.UserName,
                     UserPassword = BCrypt.Net.BCrypt.HashPassword(dto.UserPassword),
                     UserState = dto.UserState,
@@ -42,9 +44,11 @@ namespace GraciousGiver_BackEnd.Controllers
                     UserDbo = dto.UserDbo
                 };
 
-                if(user.UserPassword==dto.UserConfirmPassword)
-
-                return Created("success", _repository.Create(user));
+                if (dto.UserPassword == dto.UserConfirmPassword && 
+                    dto.UserEmail == dto.UserConfirmEmail)
+                {
+                    return Created("success", _repository.Create(user));
+                }
             }
             return new JsonResult("Invalid user data!");
         }

@@ -72,26 +72,34 @@ namespace GraciousGiver_BackEnd.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(prod).State = EntityState.Modified;
-
-            try
+            if (ModelState.IsValid)
             {
-                await _context.SaveChangesAsync();
+                
+                _context.Entry(prod).State = EntityState.Modified;
 
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DM_UserExists(id))
+                try
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                    await _context.SaveChangesAsync();
 
-            return new JsonResult("User Updated Succesfully!");
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!DM_UserExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return new JsonResult("User Updated Succesfully!");
+            }
+            
+           
+
+            return new JsonResult("Invalid user data!");
         }
 
         [HttpPost]
