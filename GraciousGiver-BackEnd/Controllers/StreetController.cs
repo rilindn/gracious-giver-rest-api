@@ -57,8 +57,9 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(prod).State = EntityState.Modified;
+            if (ModelState.IsValid)
+            {
+                _context.Entry(prod).State = EntityState.Modified;
 
             try
             {
@@ -79,6 +80,8 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return new JsonResult("Street Updated Succesfully!");
         }
+            return new JsonResult("Invalid street data!");
+       }
 
         // POST: api/Street
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -86,14 +89,16 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<Street>> PostStreet(Street prod)
         {
-            _context.Street.Add(prod);
+            if (ModelState.IsValid)
+            {
+                _context.Street.Add(prod);
             await _context.SaveChangesAsync();
 
-            // return CreatedAtAction("GetStreet", new { id = prod.StreetId }, prod);
+                // return CreatedAtAction("GetStreet", new { id = prod.StreetId }, prod);
 
-            return new JsonResult("Street Posted Succesfully!");
+            }
+            return new JsonResult("Invalid street data!");
         }
-
         // DELETE: api/Street/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Street>> DeleteStreet(int id)

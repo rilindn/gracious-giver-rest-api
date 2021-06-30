@@ -14,13 +14,13 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int UserId { get; set; }
         [Required]
-        [RegularExpression(@"^[A-Z][A-Za-z]{3,20}$", ErrorMessage = "Firstname must be between 3 and 20 chars!")]
+        [RegularExpression(@"^[A-Z][A-Za-z]{5,50}$", ErrorMessage = "Firstname must be between 5 and 50 chars!")]
         public string Firstname { get; set; }
         [Required]
-        [RegularExpression(@"^[A-Z][A-Za-z]{3,20}$", ErrorMessage = "Lastname must be between 3 and 20 chars!")]
+        [RegularExpression(@"^[A-Z][A-Za-z]{5,50}$", ErrorMessage = "Lastname must be between 5 and 50 chars!")]
         public string Lastname { get; set; }
         [Required]
-        [RegularExpression(@"^[A-Za-z][A-Za-z0-9_]{7,30}$", ErrorMessage = "Username must be between 7 and 30 chars!")]
+        [RegularExpression(@"^[A-Za-z][A-Za-z0-9_]{5,50}$", ErrorMessage = "Username must be between 5 and 50 chars!")]
         public string UserName { get; set; }
         [Required]
         [RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$", ErrorMessage = "Password must contain more than 8 chars an at least one number!")]

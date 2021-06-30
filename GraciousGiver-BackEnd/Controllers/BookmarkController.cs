@@ -24,11 +24,14 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<Bookmark>> Bookmark(Bookmark prod)
         {
-            _context.Bookmark.Add(prod);
-            await _context.SaveChangesAsync();
-
-            return new JsonResult("Product has been bookmarked succesfully!");
+            if (ModelState.IsValid)
+            {
+                _context.Bookmark.Add(prod);
+                await _context.SaveChangesAsync();
+            }
+            return new JsonResult("Invalid bookmark data!");
         }
+
 
         [HttpGet("id/{UserId}")]
         public async Task<ActionResult<IEnumerable<Bookmark>>> GetBookmarkByUserId(int UserId)
@@ -48,37 +51,6 @@ namespace GraciousGiver_BackEnd.Controllers
             return true;
         }
 
-
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDM_Bookmark(int id, Bookmark prod)
-        {
-            if (id != prod.BookmarkId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(prod).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DM_BookmarkExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return new JsonResult("User Updated Succesfully!");
-        }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Bookmark>> DeleteDM_Bookmark(int id)

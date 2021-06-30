@@ -57,8 +57,9 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(prod).State = EntityState.Modified;
+            if (ModelState.IsValid)
+            {
+                _context.Entry(prod).State = EntityState.Modified;
 
             try
             {
@@ -79,6 +80,8 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return new JsonResult("Shteti Updated Succesfully!");
         }
+            return new JsonResult("Invalid state data!");
+       }
 
         // POST: api/Shteti
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -86,14 +89,16 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<Shteti>> PostShteti(Shteti prod)
         {
-            _context.Shteti.Add(prod);
+            if (ModelState.IsValid)
+            {
+                _context.Shteti.Add(prod);
             await _context.SaveChangesAsync();
 
-            // return CreatedAtAction("GetShteti", new { id = prod.ShtetiId }, prod);
+                // return CreatedAtAction("GetShteti", new { id = prod.ShtetiId }, prod);
 
-            return new JsonResult("Shteti Posted Succesfully!");
+            }
+            return new JsonResult("Invalid state data!");
         }
-
         // DELETE: api/Shteti/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Shteti>> DeleteShteti(int id)

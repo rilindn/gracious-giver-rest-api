@@ -58,8 +58,9 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(prod).State = EntityState.Modified;
+            if (ModelState.IsValid)
+            {
+                _context.Entry(prod).State = EntityState.Modified;
 
             try
             {
@@ -78,7 +79,9 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
             }
 
-            return NoContent();
+                return new JsonResult("Organization category updated succesfully!");
+            }
+                 return new JsonResult("Invalid category data!");
         }
 
         // POST: api/OrganizationCategory
@@ -87,7 +90,9 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<OrganizationCategory>> PostOrganizationCategory(OrganizationCategory prod)
         {
-            try
+            if (ModelState.IsValid)
+            {
+                try
             {
                 _context.OrganizationCategory.Add(prod);
                 await _context.SaveChangesAsync();
@@ -97,6 +102,8 @@ namespace GraciousGiver_BackEnd.Controllers
             catch (Exception e)
             {
                 throw;
+            }
+                return new JsonResult("Invalid category data!");
             }
         }
 

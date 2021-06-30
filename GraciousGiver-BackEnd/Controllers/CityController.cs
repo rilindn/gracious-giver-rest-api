@@ -59,8 +59,10 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 return BadRequest();
             }
+            if (ModelState.IsValid)
+            {
 
-            _context.Entry(prod).State = EntityState.Modified;
+                _context.Entry(prod).State = EntityState.Modified;
 
             try
             {
@@ -81,6 +83,8 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return new JsonResult("City Updated Succesfully!");
         }
+            return new JsonResult("Invalid city data!");
+       }
 
         // POST: api/City
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -88,12 +92,14 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<City>> PostCity(City prod)
         {
-            _context.City.Add(prod);
-            await _context.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                _context.City.Add(prod);
+                await _context.SaveChangesAsync();
 
-            // return CreatedAtAction("GetCity", new { id = prod.CityId }, prod);
-
-            return new JsonResult("City Posted Succesfully!");
+                // return CreatedAtAction("GetCity", new { id = prod.CityId }, prod);
+            }
+            return new JsonResult("Invalid city data!");
         }
 
         // DELETE: api/City/5
