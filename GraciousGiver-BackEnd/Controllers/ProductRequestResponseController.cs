@@ -111,8 +111,9 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(prod).State = EntityState.Modified;
+            if (ModelState.IsValid)
+            {
+                _context.Entry(prod).State = EntityState.Modified;
 
             try
             {
@@ -132,22 +133,24 @@ namespace GraciousGiver_BackEnd.Controllers
             }
 
             return new JsonResult("Request Updated Succesfully!");
+            }
+            return new JsonResult("Invalid request data!");
         }
-
         // POST: api/Response
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<ProductRequestResponse>> PostProductRequestResponse(ProductRequestResponse prod)
         {
-            _context.ProductRequestResponse.Add(prod);
+            if (ModelState.IsValid)
+            {
+                _context.ProductRequestResponse.Add(prod);
             await _context.SaveChangesAsync();
 
-            // return CreatedAtAction("GetShteti", new { id = prod.ShtetiId }, prod);
-
-            return new JsonResult("Request Posted Succesfully!");
+                // return CreatedAtAction("GetShteti", new { id = prod.ShtetiId }, prod);
+            }
+            return new JsonResult("Invalid request data!");
         }
-
         // DELETE: api/Response/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<ProductRequestResponse>> DeleteProductRequestResponse(int id)

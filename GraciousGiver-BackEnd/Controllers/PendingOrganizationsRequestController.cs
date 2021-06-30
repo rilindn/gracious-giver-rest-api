@@ -59,8 +59,10 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 return BadRequest();
             }
+            if (ModelState.IsValid)
+            {
 
-            _context.Entry(prod).State = EntityState.Modified;
+                _context.Entry(prod).State = EntityState.Modified;
 
             try
             {
@@ -81,6 +83,8 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return new JsonResult("Organization Updated Succesfully!");
         }
+            return new JsonResult("Invalid organization data!");
+        }
 
         // POST: api/Organization
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -88,12 +92,12 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<Organization>> PostPendingOrganizationsRequest(PendingOrganizationsRequest prod)
         {
-            _context.PendingOrganizationsRequest.Add(prod);
+            if (ModelState.IsValid)
+            {
+                _context.PendingOrganizationsRequest.Add(prod);
             await _context.SaveChangesAsync();
-
-
-
-            return new JsonResult("Organization Posted Succesfully!");
+            }
+            return new JsonResult("Invalid organization data!");
         }
 
         // DELETE: api/Organization/5

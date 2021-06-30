@@ -86,8 +86,9 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(ofr).State = EntityState.Modified;
+            if (ModelState.IsValid)
+            {
+                _context.Entry(ofr).State = EntityState.Modified;
 
             try
             {
@@ -108,6 +109,8 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return new JsonResult("Response Updated Succesfully!");
         }
+            return new JsonResult("Invalid response data!");
+       }
 
         // POST: api/OfferedProductResponse
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -115,10 +118,13 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<OfferedProductResponse>> PostOfferedProductResponse(OfferedProductResponse ofr)
         {
-            _context.OfferedProductResponse.Add(ofr);
+            if (ModelState.IsValid)
+            {
+                _context.OfferedProductResponse.Add(ofr);
             await _context.SaveChangesAsync();
 
-            return new JsonResult("Response Posted Succesfully!");
+            }
+            return new JsonResult("Invalid response data!");
         }
 
         // DELETE: api/Response/5
