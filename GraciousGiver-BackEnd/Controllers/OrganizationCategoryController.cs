@@ -62,26 +62,26 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 _context.Entry(prod).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-                return prod;
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrganizationCategoryExists(id))
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
+                    return prod;
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!OrganizationCategoryExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
 
                 return new JsonResult("Organization category updated succesfully!");
             }
-                 return new JsonResult("Invalid category data!");
+            return new JsonResult("Invalid category data!");
         }
 
         // POST: api/OrganizationCategory
@@ -93,18 +93,18 @@ namespace GraciousGiver_BackEnd.Controllers
             if (ModelState.IsValid)
             {
                 try
-            {
-                _context.OrganizationCategory.Add(prod);
-                await _context.SaveChangesAsync();
+                {
+                    _context.OrganizationCategory.Add(prod);
+                    await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetOrganizationCategory", new { id = prod.OrganizationCategoryId }, prod);
-            }
-            catch (Exception e)
-            {
-                throw;
+                    return CreatedAtAction("GetOrganizationCategory", new { id = prod.OrganizationCategoryId }, prod);
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
             }
                 return new JsonResult("Invalid category data!");
-            }
         }
 
         // DELETE: api/OrganizationCategory/5
@@ -128,4 +128,5 @@ namespace GraciousGiver_BackEnd.Controllers
             return _context.OrganizationCategory.Any(e => e.OrganizationCategoryId == id);
         }
     }
+
 }
