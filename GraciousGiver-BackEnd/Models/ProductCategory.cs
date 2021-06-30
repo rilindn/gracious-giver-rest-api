@@ -10,7 +10,8 @@ namespace GraciousGiver_BackEnd.Models
     {
         [Key]
         public int ProductCategoryId { get; set; }
-
+        [Required]
+        [RegularExpression(@"/[a-zA-Z]{3,30}$/", ErrorMessage = "Name must be between 3 and 30 chars!")]
         public String ProductCategoryName { get; set; }
     }
 }

@@ -27,20 +27,30 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPost("register")]
         public IActionResult Register(RegisterDto dto)
         {
-            var user = new User
+            if (ModelState.IsValid)
             {
-                UserName = dto.UserName,
-                UserPassword = BCrypt.Net.BCrypt.HashPassword(dto.UserPassword),
-                UserState = dto.UserState,
-                UserCity = dto.UserCity,
-                UserPostcode = dto.UserPostcode,
-                UserRole = dto.UserRole,
-                UserEmail = dto.UserEmail,
-                UserGender = dto.UserGender,
-                UserDbo = dto.UserDbo
-            };
-            
-            return Created("success", _repository.Create(user));
+                var user = new User
+                {
+                    Firstname = dto.Firstname,
+                    Lastname = dto.Lastname,
+                    UserName = dto.UserName,
+                    UserPassword = BCrypt.Net.BCrypt.HashPassword(dto.UserPassword),
+                    UserState = dto.UserState,
+                    UserCity = dto.UserCity,
+                    UserPostcode = dto.UserPostcode,
+                    UserRole = dto.UserRole,
+                    UserEmail = dto.UserEmail,
+                    UserGender = dto.UserGender,
+                    UserDbo = dto.UserDbo
+                };
+
+                if (dto.UserPassword == dto.UserConfirmPassword && 
+                    dto.UserEmail == dto.UserConfirmEmail)
+                {
+                    return Created("success", _repository.Create(user));
+                }
+            }
+            return new JsonResult("Invalid user data!");
         }
 
         [HttpPost("login")]
@@ -124,13 +134,6 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
                 user.UserPassword = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
                 _repository.ChangePsw(user);
-
-                var jwt = _jwtService.Generate(user.UserId);
-
-                CookieOptions options = new CookieOptions();
-                options.Expires = DateTime.Now.AddDays(1);
-                options.HttpOnly = true;
-                Response.Cookies.Append("jwt", jwt, options);
 
                 return Ok(new
                 {
