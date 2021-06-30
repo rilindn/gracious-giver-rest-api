@@ -11,7 +11,7 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int ProductCategoryId { get; set; }
         [Required]
-        [RegularExpression(@"/[a-zA-Z]{5,50}$/", ErrorMessage = "Category name must be between 5 and 50 chars!")]
+        [RegularExpression(@"[a-zA-Z]{5,50}$", ErrorMessage = "Category name must be between 5 and 50 chars!")]
         public String ProductCategoryName { get; set; }
     }
 }

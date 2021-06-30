@@ -14,10 +14,11 @@ namespace GraciousGiver_BackEnd.Controllers
     public class OrganizationController : ControllerBase
     {
         private readonly GraciousDbContext _context;
-
-        public OrganizationController(GraciousDbContext context)
+        private readonly IUserRepository _repository;
+        public OrganizationController(IUserRepository repository,GraciousDbContext context)
         {
             _context = context;
+            _repository = repository;
         }
 
 
@@ -89,14 +90,25 @@ namespace GraciousGiver_BackEnd.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Organization>> PostOrganization(Organization prod)
+        public async Task<ActionResult<Organization>> PostOrganization(Organization orgg)
         {
             if (ModelState.IsValid)
             {
-                _context.Organization.Add(prod);
-                await _context.SaveChangesAsync();
+
+                var org = new Organization
+                {
+                    Username = orgg.Username,
+                    Password = BCrypt.Net.BCrypt.HashPassword(orgg.Password),
+                    Name = orgg.Name,
+                    Email = orgg.Email,
+                    Category = orgg.Category,
+                    Description = orgg.Description,
+                    Location = orgg.Location,
+                };
+                return Created("success", _repository.CreateOrg(org));
             }
-            return new JsonResult("Invalid organization data!");
+
+            return new JsonResult("Invalid data!");
         }
         // DELETE: api/Organization/5
         [HttpDelete("{id}")]

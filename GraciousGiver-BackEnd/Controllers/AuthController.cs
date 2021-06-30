@@ -58,15 +58,20 @@ namespace GraciousGiver_BackEnd.Controllers
         {
             try { 
             var user = _repository.GetByUsername(dto.UserName);
+            var org = new Organization();
 
-            if (user == null) return BadRequest(new { message = "Invalid credentials" });
+            if (user == null) 
+            { 
+                org = _repository.GetOrgByUsername(dto.UserName);
+                if (org==null) return BadRequest(new { message = "Invalid credentials" });
+            } 
 
-               if (!BCrypt.Net.BCrypt.Verify(dto.UserPassword, user.UserPassword))
+               if (!BCrypt.Net.BCrypt.Verify(dto.UserPassword, user!=null?user.UserPassword:org.Password))
             {
                 return BadRequest(new { message = "Invalid credentials" });
             }
 
-            var jwt = _jwtService.Generate(user.UserId);
+            var jwt = _jwtService.Generate(user != null ? user.UserId:org.OrganizationId);
 
 
             CookieOptions options = new CookieOptions();
@@ -85,8 +90,9 @@ namespace GraciousGiver_BackEnd.Controllers
         }
 
         [HttpGet("loggedUser")]
-        public IActionResult User()
+        public IActionResult Users()
         {
+            var org = new Organization();
             try { 
             var jwt = Request.Cookies["jwt"];
 
@@ -96,13 +102,16 @@ namespace GraciousGiver_BackEnd.Controllers
 
             var user = _repository.GetById(userId);
 
-            return Ok(user);
+            if(user==null) org = _repository.GetOrgById(userId);
+
+            return Ok(user!=null?user:org);
             }catch(Exception e)
             {
                 return Unauthorized();
             }
         }
-        
+
+
         [HttpPost("logout")]
         public IActionResult Logout()
         {

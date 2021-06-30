@@ -12,7 +12,7 @@ namespace GraciousGiver_BackEnd.Models
             [Key]
             public int ShtetiId { get; set; }
             [Required]
-            [RegularExpression(@"/[a-zA-Z]{5,50}$/", ErrorMessage = "State name must be between 5 and 50 chars!")]
+            [RegularExpression(@"[a-zA-Z]{5,50}$", ErrorMessage = "State name must be between 5 and 50 chars!")]
             public string Emri { get; set; }
         
     }

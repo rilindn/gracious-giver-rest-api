@@ -20,7 +20,6 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<RequestPhotos> RequestPhotos { get; set; }
         public DbSet<Shteti> Shteti { get; set; }
         public DbSet<Street> Street { get; set; }
-        public DbSet<GG_Admin> GG_Admin { get; set; }
         public DbSet<Product_Request> Product_Request { get; set; }
         public DbSet<OrganizationCategory> OrganizationCategory { get; set; }
         public DbSet<Request> Request { get; set; }
