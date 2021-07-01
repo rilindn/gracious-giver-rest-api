@@ -53,6 +53,33 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.ToTable("City");
                 });
 
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.Notifications", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Acceptor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Initiator")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Readed")
+                        .HasColumnType("bit");
+
+                    b.HasKey("NotificationId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.OfferProduct", b =>
                 {
                     b.Property<int>("OfferProductId")
@@ -74,9 +101,6 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ReceiverId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RequestId")
                         .HasColumnType("int");
 
                     b.HasKey("OfferProductId");

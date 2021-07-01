@@ -10,10 +10,6 @@ namespace GraciousGiver_BackEnd.Migrations
             migrationBuilder.DropTable(
                 name: "GG_Admin");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Users_UserName",
-                table: "Users");
-
             migrationBuilder.AlterColumn<string>(
                 name: "UserName",
                 table: "Users",
@@ -190,11 +186,6 @@ namespace GraciousGiver_BackEnd.Migrations
                     table.PrimaryKey("PK_OrganizationCategory", x => x.OrganizationCategoryId);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_UserName",
-                table: "Users",
-                column: "UserName",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -202,10 +193,7 @@ namespace GraciousGiver_BackEnd.Migrations
             migrationBuilder.DropTable(
                 name: "OrganizationCategory");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Users_UserName",
-                table: "Users");
-
+         
             migrationBuilder.DropColumn(
                 name: "RequestId",
                 table: "OfferProduct");
@@ -350,13 +338,6 @@ namespace GraciousGiver_BackEnd.Migrations
                 {
                     table.PrimaryKey("PK_GG_Admin", x => x.AdminId);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_UserName",
-                table: "Users",
-                column: "UserName",
-                unique: true,
-                filter: "[UserName] IS NOT NULL");
         }
     }
 }

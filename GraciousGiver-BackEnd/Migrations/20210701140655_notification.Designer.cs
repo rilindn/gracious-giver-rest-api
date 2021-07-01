@@ -10,16 +10,34 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    [Migration("20210625000121_Request")]
-    partial class Request
+    [Migration("20210701140655_notification")]
+    partial class notification
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.Bookmark", b =>
+                {
+                    b.Property<int>("BookmarkId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookmarkId");
+
+                    b.ToTable("Bookmark");
+                });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.City", b =>
                 {
@@ -29,6 +47,7 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CityName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CityId");
@@ -36,31 +55,193 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.ToTable("City");
                 });
 
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.GG_Admin", b =>
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.Notifications", b =>
                 {
-                    b.Property<int>("AdminId")
+                    b.Property<int>("NotificationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("AdminDbo")
+                    b.Property<int>("Acceptor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("AdminEmail")
+                    b.Property<int>("Initiator")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Readed")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdminGender")
+                    b.HasKey("NotificationId");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.OfferProduct", b =>
+                {
+                    b.Property<int>("OfferProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("CheckOffer")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdminName")
+                    b.Property<DateTime>("Offerdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OfferProductId");
+
+                    b.ToTable("OfferProduct");
+                });
+
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.OfferedProductResponse", b =>
+                {
+                    b.Property<int>("OfferedProductResponseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Message")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("AdminPassword")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<int>("OfferProductId")
+                        .HasColumnType("int");
 
-                    b.HasKey("AdminId");
+                    b.Property<int>("OfferedProductId")
+                        .HasColumnType("int");
 
-                    b.ToTable("GG_Admin");
+                    b.Property<DateTime>("OfferedProductResponseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OfferedProductResponseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OfferedProductResponseId");
+
+                    b.ToTable("OfferedProductResponse");
+                });
+
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.Organization", b =>
+                {
+                    b.Property<int>("OrganizationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrganizationId");
+
+                    b.ToTable("Organization");
+                });
+
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.OrganizationCategory", b =>
+                {
+                    b.Property<int>("OrganizationCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("OrganizationCategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrganizationCategoryId");
+
+                    b.ToTable("OrganizationCategory");
+                });
+
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.PendingOrganizationsRequest", b =>
+                {
+                    b.Property<int>("OrganizationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Checked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrganizationId");
+
+                    b.ToTable("PendingOrganizationsRequest");
                 });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Product", b =>
@@ -74,24 +255,29 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProductCategory")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductComment")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductLocation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductPhoto")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductState")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductId");
@@ -107,6 +293,7 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ProductCategoryName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductCategoryId");
@@ -125,6 +312,7 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProductPhotoPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PhotoId");
@@ -139,10 +327,21 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("DonatorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
                     b.Property<int>("RequestId")
                         .HasColumnType("int");
 
                     b.Property<string>("Response")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ResponseDate")
@@ -172,6 +371,9 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("checkedR")
+                        .HasColumnType("bit");
+
                     b.HasKey("RequestId");
 
                     b.ToTable("Product_Request");
@@ -188,26 +390,50 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RequestCategory")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RequestComment")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RequestDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RequestLocation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RequestName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RequestPhoto")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RequesttId");
 
                     b.ToTable("Request");
+                });
+
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.RequestPhotos", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Request")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RequestPhotoPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PhotoId");
+
+                    b.ToTable("RequestPhotos");
                 });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Shteti", b =>
@@ -218,6 +444,7 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Emri")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ShtetiId");
@@ -233,6 +460,7 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("StreetName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StreetId");
@@ -247,38 +475,52 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserCity")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UserDbo")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserEmail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserGender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserPassword")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserPostcode")
                         .HasColumnType("int");
 
                     b.Property<string>("UserRole")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserState")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("UserName")
-                        .IsUnique()
-                        .HasFilter("[UserName] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

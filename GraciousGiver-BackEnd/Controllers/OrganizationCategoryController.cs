@@ -105,6 +105,10 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
             }
                 return new JsonResult("Invalid category data!");
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 027567b67d37420bbcb62647eed33aa632dac340
         }
 
         // DELETE: api/OrganizationCategory/5
