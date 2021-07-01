@@ -13,7 +13,7 @@ namespace GraciousGiver_BackEnd.Dtos
         [Required]
         public String OldPassword { get; set; }
         [Required]
-        [RegularExpression(@"/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;", ErrorMessage = "Password must contain more than 8 chars an at least one number!")]
+        [RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$", ErrorMessage = "Password must contain more than 8 chars an at least one number!")]
         public String NewPassword { get; set; }
     }
 }

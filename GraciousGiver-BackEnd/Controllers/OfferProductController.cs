@@ -52,6 +52,77 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.OfferProduct.Take(nr).ToListAsync();
         }
 
+        [HttpGet("receiver/{receiverId}")]
+        public async Task<ActionResult<List<OfferProduct>>> GetOfferedProductResponseByRequesterId(int receiverId)
+        {
+            var offers = await _context.OfferProduct.Where(r => r.ReceiverId == receiverId).ToListAsync();
+
+            List<OfferProduct> offersP = new List<OfferProduct>();
+            var count = 0;
+            foreach (OfferProduct p in offers)
+            {
+                if (p.CheckOffer == false)
+                {
+                    offersP.Add(p);
+                    count++;
+                }
+            }
+            return offersP;
+        }
+
+        [HttpGet("amount/{nr}/receiver/{receiverId}")]
+        public async Task<ActionResult<IEnumerable<OfferProduct>>> GetOfferedProductResponseByReceiverIdAmount(int nr, int receiverId)
+        {
+            var offers = await _context.OfferProduct.Where(r => r.ReceiverId == receiverId).ToListAsync();
+
+            List<OfferProduct> offersP = new List<OfferProduct>();
+            var count = 0;
+            foreach (OfferProduct p in offers)
+            {
+                if (count < nr && p.CheckOffer == false)
+                {
+                    offersP.Add(p);
+                    count++;
+                }
+            }
+            return offersP;
+        }
+        [HttpGet("donator/{donatorId}")]
+        public async Task<ActionResult<IEnumerable<OfferProduct>>> GetProductRequestResponseByDonatorId(int donatorId)
+        {
+            var offers = await _context.OfferProduct.Where(r => r.ProductProviderId == donatorId).ToListAsync();
+
+            List<OfferProduct> offersP = new List<OfferProduct>();
+            var count = 0;
+            foreach (OfferProduct p in offers)
+            {
+                if (p.CheckOffer == false)
+                {
+                    offersP.Add(p);
+                    count++;
+                }
+            }
+            return offersP;
+        }
+
+        [HttpGet("amount/{nr}/donator/{donatorId}")]
+        public async Task<ActionResult<IEnumerable<OfferProduct>>> GetProductRequestResponseByDonatorIdAmount(int nr, int donatorId)
+        {
+            var offers = await _context.OfferProduct.Where(r => r.ProductProviderId == donatorId).ToListAsync();
+
+            List<OfferProduct> offersP = new List<OfferProduct>();
+            var count = 0;
+            foreach (OfferProduct p in offers)
+            {
+                if (count < nr && p.CheckOffer == false)
+                {
+                    offersP.Add(p);
+                    count++;
+                }
+            }
+            return offersP;
+        }
+
         // PUT: api/OfferProduct/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

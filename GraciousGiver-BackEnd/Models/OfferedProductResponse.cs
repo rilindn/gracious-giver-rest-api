@@ -12,7 +12,7 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int OfferedProductResponseId { get; set; }
         [Required]
-        [RegularExpression(@"[a-zA-Z]{5,50}$", ErrorMessage = "Name must be between 5 and 50 chars!")]
+        [RegularExpression(@"[a-zA-Z]{5,50}", ErrorMessage = "Name must be between 5 and 50 chars!")]
         public String OfferedProductResponseName { get; set; }
         [Required]
         public int OfferProductId { get; set; }
@@ -21,7 +21,7 @@ namespace GraciousGiver_BackEnd.Models
         [Required]
         public int OfferedProductId { get; set; }
         [Required]
-        [RegularExpression(@"[a-zA-Z]{5,50}$", ErrorMessage = "Message must be between 5 and 50 chars!")]
+        [RegularExpression(@"[a-zA-Z0-9 \n]{10,250}$", ErrorMessage = "Message must be between 5 and 50 chars!")]
         public String Message { get; set; }
         [Required]
         public int ProductProviderId { get; set; }
