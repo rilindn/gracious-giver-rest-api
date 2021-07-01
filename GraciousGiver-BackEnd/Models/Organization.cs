@@ -20,6 +20,10 @@ namespace GraciousGiver_BackEnd.Models
         [RegularExpression(@"[a-zA-Z]{5,50}$", ErrorMessage = "Name must be between 5 and 50 chars!")]
         public string Name { get; set; }
         [Required]
+        public string Logo { get; set; }
+        [Required]
+        public string Documentation { get; set; }
+        [Required]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")]
         public string Email { get; set; }
         [Required]
@@ -28,6 +32,8 @@ namespace GraciousGiver_BackEnd.Models
         [RegularExpression(@"[a-zA-Z0-9]{20,150}$", ErrorMessage = "Description must be between 20 and 150 chars!")]
         public string Description { get; set; }
         [Required]
-        public string Location { get; set; }
+        public string State { get; set; }
+        [Required]
+        public string City { get; set; }
     }
 }

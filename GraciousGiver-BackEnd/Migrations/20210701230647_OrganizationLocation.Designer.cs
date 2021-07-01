@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    [Migration("20210701143614_offerprod")]
-    partial class offerprod
+    [Migration("20210701230647_OrganizationLocation")]
+    partial class OrganizationLocation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,6 +53,33 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.HasKey("CityId");
 
                     b.ToTable("City");
+                });
+
+            modelBuilder.Entity("GraciousGiver_BackEnd.Models.Notifications", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Acceptor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Initiator")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Readed")
+                        .HasColumnType("bit");
+
+                    b.HasKey("NotificationId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.OfferProduct", b =>
@@ -132,7 +159,15 @@ namespace GraciousGiver_BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Documentation")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -140,7 +175,7 @@ namespace GraciousGiver_BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location")
+                    b.Property<string>("Logo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -149,6 +184,10 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

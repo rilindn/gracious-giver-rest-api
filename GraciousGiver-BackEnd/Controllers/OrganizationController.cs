@@ -1,9 +1,11 @@
 ﻿using GraciousGiver_BackEnd.Data;
 using GraciousGiver_BackEnd.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,10 +17,12 @@ namespace GraciousGiver_BackEnd.Controllers
     {
         private readonly GraciousDbContext _context;
         private readonly IUserRepository _repository;
-        public OrganizationController(IUserRepository repository,GraciousDbContext context)
+        private readonly IWebHostEnvironment _env;
+        public OrganizationController(IUserRepository repository, GraciousDbContext context, IWebHostEnvironment env)
         {
             _context = context;
             _repository = repository;
+            _env = env;
         }
 
 
@@ -65,27 +69,27 @@ namespace GraciousGiver_BackEnd.Controllers
 
                 _context.Entry(prod).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrganizationExists(id))
+                try
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                    await _context.SaveChangesAsync();
 
-            return new JsonResult("Organization Updated Succesfully!");
-        }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OrganizationExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return new JsonResult("Organization Updated Succesfully!");
+            }
             return new JsonResult("Invalid organization data!");
-       }
+        }
         // POST: api/Organization
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -101,9 +105,12 @@ namespace GraciousGiver_BackEnd.Controllers
                     Password = BCrypt.Net.BCrypt.HashPassword(orgg.Password),
                     Name = orgg.Name,
                     Email = orgg.Email,
+                    Logo = orgg.Logo,
+                    Documentation = orgg.Documentation,
                     Category = orgg.Category,
                     Description = orgg.Description,
-                    Location = orgg.Location,
+                    State = orgg.State,
+                    City = orgg.City,
                 };
                 return Created("success", _repository.CreateOrg(org));
             }
@@ -129,6 +136,29 @@ namespace GraciousGiver_BackEnd.Controllers
         private bool OrganizationExists(int id)
         {
             return _context.Organization.Any(e => e.OrganizationId == id);
+        }
+        [Route("SaveFile/Organization")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/Organization/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
