@@ -41,6 +41,20 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return not;
         }
+        
+        // GET: api/Notifications/5
+        [HttpGet("acceptor/{id}")]
+        public async Task<ActionResult<IEnumerable<Notifications>>> GetNotificationsById(int id)
+        {
+            var not = await _context.Notifications.Where(n=>n.Acceptor==id).ToListAsync();
+
+            if (not == null)
+            {
+                return NotFound();
+            }
+
+            return not;
+        }
 
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
