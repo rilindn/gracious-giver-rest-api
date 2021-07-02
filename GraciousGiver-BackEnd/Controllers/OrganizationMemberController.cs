@@ -11,50 +11,50 @@ namespace GraciousGiver_BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NotificationController : ControllerBase
+    public class OrganizationMemberController : ControllerBase
     {
         private readonly GraciousDbContext _context;
 
-        public NotificationController(GraciousDbContext context)
+        public OrganizationMemberController(GraciousDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Notification
+        // GET: api/OrganizationMember
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Notifications>>> GetNotifications()
+        public async Task<ActionResult<IEnumerable<OrganizationMember>>> GetOrganizationMember()
         {
-            return await _context.Notifications.ToListAsync();
+            return await _context.OrganizationMember.ToListAsync();
         }
 
 
-        // GET: api/Notifications/5
+        // GET: api/OrganizationMember/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Notifications>> GetNotifications(int id)
+        public async Task<ActionResult<OrganizationMember>> GetOrganizationMember(int id)
         {
-            var not = await _context.Notifications.FindAsync(id);
+            var om = await _context.OrganizationMember.FindAsync(id);
 
-            if (not == null)
+            if (om == null)
             {
                 return NotFound();
             }
 
-            return not;
+            return om;
         }
 
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNotifications(int id, Notifications not)
+        public async Task<IActionResult> PutOrganizationMember(int id, OrganizationMember om)
         {
-            if (id != not.NotificationId)
+            if (id != om.OrganizationMemberId)
             {
                 return BadRequest();
             }
             if (ModelState.IsValid)
             {
-                _context.Entry(not).State = EntityState.Modified;
+                _context.Entry(om).State = EntityState.Modified;
 
                 try
                 {
@@ -63,7 +63,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NotificationsExists(id))
+                    if (!OrganizationMemberExists(id))
                     {
                         return NotFound();
                     }
@@ -73,46 +73,46 @@ namespace GraciousGiver_BackEnd.Controllers
                     }
                 }
 
-                return new JsonResult("Notification Updated Succesfully!");
+                return new JsonResult("Organization Member Updated Succesfully!");
             }
-            return new JsonResult("Invalid!");
+            return new JsonResult("Invalid data!");
         }
 
-        // POST: api/Notifications
+        // POST: api/OrganizationMember
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Notifications>> PostNotifications(Notifications not)
+        public async Task<ActionResult<OrganizationMember>> PostOrganizationMember(OrganizationMember om)
         {
             if (ModelState.IsValid)
             {
-                _context.Notifications.Add(not);
+                _context.OrganizationMember.Add(om);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetNotifications", new { id = not.NotificationId }, not);
+                return CreatedAtAction("GetOrganizationMember", new { id = om.OrganizationMemberId }, om);
             }
-            return new JsonResult("Invalid Notification data!");
+            return new JsonResult("Invalid Organization Member data!");
         }
 
-        // DELETE: api/Notifications/5
+        // DELETE: api/OrganizationMember/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Notifications>> DeleteNotifications(int id)
+        public async Task<ActionResult<OrganizationMember>> DeleteOrganizationMember(int id)
         {
-            var not = await _context.Notifications.FindAsync(id);
-            if (not == null)
+            var om = await _context.OrganizationMember.FindAsync(id);
+            if (om == null)
             {
                 return NotFound();
             }
 
-            _context.Notifications.Remove(not);
+            _context.OrganizationMember.Remove(om);
             await _context.SaveChangesAsync();
 
-            return new JsonResult("Notification Deleted  Succesfully!");
+            return new JsonResult("Organization Member Deleted  Succesfully!");
         }
 
-        private bool NotificationsExists(int id)
+        private bool OrganizationMemberExists(int id)
         {
-            return _context.Notifications.Any(e => e.NotificationId == id);
+            return _context.OrganizationMember.Any(e => e.OrganizationMemberId == id);
         }
     }
 

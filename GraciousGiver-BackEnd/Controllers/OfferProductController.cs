@@ -169,7 +169,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 _context.OfferProduct.Add(prod);
             await _context.SaveChangesAsync();
 
-                // return CreatedAtAction("GetShteti", new { id = prod.ShtetiId }, prod);
+                return CreatedAtAction("GetOfferProduct", new { id = prod.OfferProductId }, prod);
 
             }
             return new JsonResult("Invalid offer product data!");

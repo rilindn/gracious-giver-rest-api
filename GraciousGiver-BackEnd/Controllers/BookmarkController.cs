@@ -22,14 +22,16 @@ namespace GraciousGiver_BackEnd.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Bookmark>> Bookmark(Bookmark prod)
+        public async Task<ActionResult<Bookmark>> PostBookmark(Bookmark prod)
         {
             if (ModelState.IsValid)
             {
                 _context.Bookmark.Add(prod);
                 await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetBookmark", new { id = prod.BookmarkId }, prod);
             }
-            return new JsonResult("Invalid bookmark data!");
+            return new JsonResult("Invalid Bookmark data!");
         }
 
 

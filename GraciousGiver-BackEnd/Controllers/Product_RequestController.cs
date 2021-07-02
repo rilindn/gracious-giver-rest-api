@@ -147,8 +147,6 @@ namespace GraciousGiver_BackEnd.Controllers
             _context.Product_Request.Add(prod);
             await _context.SaveChangesAsync();
 
-            // return CreatedAtAction("GetShteti", new { id = prod.ShtetiId }, prod);
-
             return new JsonResult("Request Posted Succesfully!");
         }
 

@@ -94,7 +94,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 _context.Street.Add(prod);
             await _context.SaveChangesAsync();
 
-                // return CreatedAtAction("GetStreet", new { id = prod.StreetId }, prod);
+                return CreatedAtAction("GetStreet", new { id = prod.StreetId }, prod);
 
             }
             return new JsonResult("Invalid street data!");

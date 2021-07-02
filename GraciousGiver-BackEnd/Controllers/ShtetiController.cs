@@ -94,7 +94,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 _context.Shteti.Add(prod);
             await _context.SaveChangesAsync();
 
-                // return CreatedAtAction("GetShteti", new { id = prod.ShtetiId }, prod);
+               return CreatedAtAction("GetShteti", new { id = prod.ShtetiId }, prod);
 
             }
             return new JsonResult("Invalid state data!");
