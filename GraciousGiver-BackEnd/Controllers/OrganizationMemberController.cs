@@ -27,6 +27,11 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.OrganizationMember.ToListAsync();
         }
 
+        [HttpGet("amount/{nr}")]
+        public async Task<ActionResult<IEnumerable<OrganizationMember>>> GetOrganizationMemberByAmount(int nr)
+        {
+            return await _context.OrganizationMember.Take(nr).ToListAsync();
+        }
 
         // GET: api/OrganizationMember/5
         [HttpGet("{id}")]
@@ -95,10 +100,10 @@ namespace GraciousGiver_BackEnd.Controllers
         }
 
         // DELETE: api/OrganizationMember/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<OrganizationMember>> DeleteOrganizationMember(int id)
+        [HttpDelete("{id}/{orgId}")]
+        public async Task<ActionResult<OrganizationMember>> DeleteOrganizationMember(int id,int orgId)
         {
-            var om = await _context.OrganizationMember.FindAsync(id);
+            var om = _context.OrganizationMember.Where(r=>r.OrganizationId==orgId && r.UserId==id).FirstOrDefault();
             if (om == null)
             {
                 return NotFound();
