@@ -97,7 +97,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 _context.City.Add(prod);
                 await _context.SaveChangesAsync();
 
-                // return CreatedAtAction("GetCity", new { id = prod.CityId }, prod);
+                 return CreatedAtAction("GetCity", new { id = prod.CityId }, prod);
             }
             return new JsonResult("Invalid city data!");
         }

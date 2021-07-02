@@ -103,11 +103,12 @@ namespace GraciousGiver_BackEnd.Controllers
                 _context.Notifications.Add(not);
                 await _context.SaveChangesAsync();
 
+                return CreatedAtAction("GetNotifications", new { id = not.NotificationId }, not);
             }
-            return new JsonResult("Invalid!");
+            return new JsonResult("Invalid Notification data!");
         }
 
-        // DELETE: api/Response/5
+        // DELETE: api/Notifications/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Notifications>> DeleteNotifications(int id)
         {

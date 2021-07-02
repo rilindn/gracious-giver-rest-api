@@ -96,6 +96,8 @@ namespace GraciousGiver_BackEnd.Controllers
             {
                 _context.PendingOrganizationsRequest.Add(prod);
             await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetPendingOrganizationsRequest", new { id = prod.OrganizationId }, prod);
             }
             return new JsonResult("Invalid organization data!");
         }

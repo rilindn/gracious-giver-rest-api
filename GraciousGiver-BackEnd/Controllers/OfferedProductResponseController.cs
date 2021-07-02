@@ -148,6 +148,8 @@ namespace GraciousGiver_BackEnd.Controllers
                 _context.OfferedProductResponse.Add(ofr);
             await _context.SaveChangesAsync();
 
+                return CreatedAtAction("GetOfferedProductResponse", new { id = ofr.OfferedProductResponseId }, ofr);
+
             }
             return new JsonResult("Invalid response data!");
         }
