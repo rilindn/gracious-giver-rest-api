@@ -24,13 +24,13 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrganizationMemberRequest>>> GetOrganizationMemberRequest()
         {
-            return await _context.OrganizationMemberRequest.ToListAsync();
+            return await _context.OrganizationMemberRequest.Where(r => r.Checked == false).ToListAsync();
         }
 
         [HttpGet("amount/{nr}")]
         public async Task<ActionResult<IEnumerable<OrganizationMemberRequest>>> GetOrganizationMemberRequestByAmount(int nr)
         {
-            return await _context.OrganizationMemberRequest.Take(nr).ToListAsync();
+            return await _context.OrganizationMemberRequest.Where(r=>r.Checked==false).Take(nr).ToListAsync();
         }
 
         // GET: api/OrganizationMemberRequest/5
@@ -109,7 +109,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 return NotFound();
             }
 
-            _context.OrganizationMemberRequest.Remove(om);
+            _context.OrganizationMemberRequest.Remove((OrganizationMemberRequest)om);
             await _context.SaveChangesAsync();
 
             return new JsonResult("Organization Member Deleted  Succesfully!");

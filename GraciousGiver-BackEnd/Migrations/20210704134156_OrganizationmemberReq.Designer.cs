@@ -4,14 +4,16 @@ using GraciousGiver_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    partial class GraciousDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210704134156_OrganizationmemberReq")]
+    partial class OrganizationmemberReq
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -326,10 +328,6 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DonatorId")
                         .HasColumnType("int");
 
@@ -347,6 +345,10 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
+                    b.Property<string>("ProductLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -356,10 +358,6 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductState")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -473,10 +471,6 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ReceiverId")
                         .HasColumnType("int");
 
@@ -494,6 +488,10 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
+                    b.Property<string>("RequestLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("RequestName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -501,10 +499,6 @@ namespace GraciousGiver_BackEnd.Migrations
 
                     b.Property<string>("RequestPhoto")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("RequestPhoto")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RequesttId");
