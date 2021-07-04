@@ -11,20 +11,21 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int ProductId { get; set; }
         [Required]
-        [RegularExpression(@"[A-Za-z]{3,20}$", ErrorMessage = "Username must be between 3 and 20 chars!")]
-        public String ProductName { get; set; }
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Product name must be between 5 and 50 chars!")]
+        public string ProductName { get; set; }
         [Required]
-        public String ProductCategory { get; set; }
+        public string ProductCategory { get; set; }
         [Required]
-        public String ProductState { get; set; }
-        public String ProductPhoto { get; set; }
+        public string ProductState { get; set; }
+        public string ProductPhoto { get; set; }
         [Required]
-        [RegularExpression(@"[A-Za-z0-9]{20,250}$", ErrorMessage = "Desription must be between 20 and 250 chars!")]
-        public String ProductDescription { get; set; }
+        [StringLength(400, MinimumLength = 10, ErrorMessage = "Message must be between 10 and 400 chars!")]
+        public string ProductDescription { get; set; }
         [Required]
-        public String ProductLocation { get; set; }
-        [RegularExpression(@"[A-Za-z0-9]{20,250}$", ErrorMessage = "Desription must be between 20 and 250 chars!")]
-        public String ProductComment { get; set; }
+        public string ProductLocation { get; set; }
+        [Required]
+        [StringLength(200, ErrorMessage = "Max length is 200 chars!")]
+        public string ProductComment { get; set; }
         [Required]
         public int DonatorId { get; set; }
     }

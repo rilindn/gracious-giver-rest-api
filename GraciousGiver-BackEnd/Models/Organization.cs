@@ -11,7 +11,7 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int OrganizationId { get; set; }
         [Required]
-        [RegularExpression(@"[a-zA-Z0-9]{5,50}$", ErrorMessage = "Username must be between 5 and 50 chars!")]
+        [RegularExpression(@"^[A-Za-z][A-Za-z0-9_]{5,50}$", ErrorMessage = "Username must be between 5 and 50 chars!")]
         public string Username { get; set; }
         [Required]
         [RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$", ErrorMessage = "Password must contain more than 8 chars an at least one number!")]
@@ -28,6 +28,7 @@ namespace GraciousGiver_BackEnd.Models
         [Required]
         public string Category { get; set; }
         [Required]
+        [StringLength(700, MinimumLength = 50, ErrorMessage = "Message must be between 50 and 700 chars!")]
         public string Description { get; set; }
         [Required]
         public string State { get; set; }

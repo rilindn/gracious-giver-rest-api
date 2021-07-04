@@ -10,10 +10,16 @@ namespace GraciousGiver_BackEnd.Models
     {
         [Key]
         public int RequestId { get; set; }
+        [Required]
         public int UserId { get; set; }
+        [Required]
         public int ProductId { get; set; }
+        [Required]
+        [StringLength(300, MinimumLength = 10, ErrorMessage = "Message must be between 10 and 300 chars!")]
         public String Message { get; set; }
+        [Required]
         public DateTime Request_Date { get; set; }
+        [Required]
         public Boolean checkedR {get; set;}
 
         public int GetReqProductId()

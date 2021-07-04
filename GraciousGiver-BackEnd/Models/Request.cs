@@ -11,20 +11,21 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int RequesttId { get; set; }
         [Required]
-        [RegularExpression(@"[a-zA-Z0-9]{20,250}$", ErrorMessage = "Desription must be between 20 and 250 chars!")]
-        public String RequestDescription { get; set; }
+        [StringLength(400, MinimumLength = 10, ErrorMessage = "Message must be between 10 and 400 chars!")]
+        public string RequestDescription { get; set; }
         [Required]
-        [RegularExpression(@"[a-zA-Z]{5,50}$", ErrorMessage = "Name must be between 5 and 50 chars!")]
-        public String RequestName { get; set; }
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Request name must be between 5 and 50 chars!")]
+        public string RequestName { get; set; }
         [Required]
-        public String RequestCategory { get; set; }
+        public string RequestCategory { get; set; }
         [Required]
-        public String RequestLocation { get; set; }
-       
-        public String RequestComment { get; set; }
-    
-        public String RequestPhoto { get; set; }
-
+        public string RequestLocation { get; set; }
+        [Required]
+        [StringLength(200, ErrorMessage = "Max length is 200 chars!")]
+        public string RequestComment { get; set; }
+        [Required]
+        public string RequestPhoto { get; set; }
+        [Required]
         public int ReceiverId { get; set; }
     }
 }

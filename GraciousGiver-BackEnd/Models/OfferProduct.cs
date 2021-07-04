@@ -17,10 +17,11 @@ namespace GraciousGiver_BackEnd.Models
         [Required]
         public int RequestId { get; set; }
         [Required]
-        [RegularExpression(@"[a-zA-Z0-9 \n]{10,250}$", ErrorMessage = "Message must be between 10 and 150 chars!")]
+        [StringLength(300, MinimumLength = 10, ErrorMessage = "Message must be between 10 and 300 chars!")]
         public string Message { get; set; }
         [Required]
         public DateTime Offerdate { get; set; }
+        [Required]
         public Boolean CheckOffer { get; set; }
         
     }
