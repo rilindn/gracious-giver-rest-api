@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GraciousGiver_BackEnd.Models
 {
-    public class OrganizationMember
+    public class OrganizationMemberRequest
     {
         [Key]
-        public int OrganizationMemberId { get; set; }
+        public int OrganizationMemberRequestId { get; set; }
 
         public int OrganizationId { get; set; }
 
@@ -17,6 +17,6 @@ namespace GraciousGiver_BackEnd.Models
 
         public DateTime DateOfJoining { get; set; }
 
-
+        public Boolean Checked { get; set; }
     }
 }
