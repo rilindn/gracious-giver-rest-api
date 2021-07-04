@@ -11,7 +11,6 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int OrganizationCategoryId { get; set; }
         [Required]
-        [RegularExpression(@"[a-zA-Z]{5,50}$", ErrorMessage = "Category name must be between 5 and 50 chars!")]
         public String OrganizationCategoryName { get; set; }
     }
 }

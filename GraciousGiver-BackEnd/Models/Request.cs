@@ -19,7 +19,9 @@ namespace GraciousGiver_BackEnd.Models
         [Required]
         public string RequestCategory { get; set; }
         [Required]
-        public string RequestLocation { get; set; }
+        public string State { get; set; }
+        [Required]
+        public string City { get; set; }
         [Required]
         [StringLength(200, ErrorMessage = "Max length is 200 chars!")]
         public string RequestComment { get; set; }

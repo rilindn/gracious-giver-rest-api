@@ -1,4 +1,5 @@
-﻿using GraciousGiver_BackEnd.Data;
+﻿
+using GraciousGiver_BackEnd.Data;
 using GraciousGiver_BackEnd.Dtos;
 using GraciousGiver_BackEnd.Helpers;
 using GraciousGiver_BackEnd.Models;
@@ -79,11 +80,9 @@ namespace GraciousGiver_BackEnd.Controllers
             options.HttpOnly = true;
             Response.Cookies.Append("jwt", jwt, options);
 
-            return Ok(new { 
-                
-                message="success"
-            });
-            }catch(Exception e)
+                return Ok(user != null ? user : org);
+            }
+            catch(Exception e)
             {
                 throw;
             }

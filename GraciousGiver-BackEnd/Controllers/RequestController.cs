@@ -28,7 +28,16 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequest()
         {
-            return await _context.Request.ToListAsync();
+            try
+            {
+
+                var prods = await _context.Request.ToListAsync();
+                return prods;
+            }
+            catch(Exception e)
+            {
+                throw;
+            }
         }
 
         // GET: api/Request/5

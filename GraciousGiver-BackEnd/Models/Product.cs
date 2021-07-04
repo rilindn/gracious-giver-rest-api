@@ -22,7 +22,9 @@ namespace GraciousGiver_BackEnd.Models
         [StringLength(400, MinimumLength = 10, ErrorMessage = "Message must be between 10 and 400 chars!")]
         public string ProductDescription { get; set; }
         [Required]
-        public string ProductLocation { get; set; }
+        public string State { get; set; }
+        [Required]
+        public string City { get; set; }
         [Required]
         [StringLength(200, ErrorMessage = "Max length is 200 chars!")]
         public string ProductComment { get; set; }

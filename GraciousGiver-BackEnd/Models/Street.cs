@@ -10,7 +10,6 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int StreetId { get; set; }
         [Required]
-        [RegularExpression(@"^.*?\s[N]{0,1}([-a-zA-Z0-9]+)\s*\w*$", ErrorMessage = "Invalid street name!")]
         public String StreetName { get; set; }
     }
 }
