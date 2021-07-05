@@ -32,8 +32,11 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Notifications> Notifications { get; set; }
         public DbSet<OrganizationMember> OrganizationMember { get; set; }
         public DbSet<OrganizationMemberRequest> OrganizationMemberRequest { get; set; }
+        public DbSet<EventParticipants> EventParticipants { get; set; }
         public DbSet<User> Users { get; set; }
         public object User { get; internal set; }
+
+        
 
 
         /* public object ProductRequestResponse { get; internal set; }*/
