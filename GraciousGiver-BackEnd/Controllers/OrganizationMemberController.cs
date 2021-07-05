@@ -46,6 +46,19 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return om;
         }
+        
+        [HttpGet("joined/{orgid}/{userid}")]
+        public async Task<ActionResult<OrganizationMember>> GetJoinedOrganizationMember(int orgid, int userid)
+        {
+            var om = await  _context.OrganizationMember.Where(o => o.OrganizationId == orgid && o.UserId == userid).FirstOrDefaultAsync();
+
+            if (om == null)
+            {
+                return NotFound();
+            }
+
+            return om;
+        }
 
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
