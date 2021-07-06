@@ -17,5 +17,6 @@ namespace GraciousGiver_BackEnd.Data
 
         object Generate(int userId);
         User ChangePsw(User user);
+        Organization ChangeOrgPsw(Organization org);
     }
 }

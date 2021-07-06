@@ -133,15 +133,28 @@ namespace GraciousGiver_BackEnd.Controllers
             try
             {
                 var user = _repository.GetByUsername(dto.UserName);
+                var org = new Organization();
 
-                if (user == null) return BadRequest(new { message = "Invalid credentials" });
-
-                if (!BCrypt.Net.BCrypt.Verify(dto.OldPassword, user.UserPassword))
+                if (user == null)
                 {
-                    return BadRequest(new { message = "Invalid credentials" });
+                    org = _repository.GetOrgByUsername(dto.UserName);
+                    if (org == null) return BadRequest(new { message = "Invalid credentials" });
                 }
-                user.UserPassword = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
-                _repository.ChangePsw(user);
+
+                if (!BCrypt.Net.BCrypt.Verify(dto.OldPassword, user!=null?user.UserPassword:org.Password))
+            {
+                return BadRequest(new { message = "Invalid credentials" });
+            }
+                if (user != null)
+                {
+                    user.UserPassword = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+                    _repository.ChangePsw(user);
+                }
+                else
+                {
+                    org.Password = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+                    _repository.ChangeOrgPsw(org);
+                }
 
                 return Ok(new
                 {
