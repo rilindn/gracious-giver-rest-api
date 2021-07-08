@@ -15,7 +15,7 @@ namespace GraciousGiver_BackEnd.Models
 
         public String EventDescription { get; set; }
 
-        public String Location { get; set; }
+        public String City { get; set; }
 
         public DateTime EventDate { get; set; }
 
