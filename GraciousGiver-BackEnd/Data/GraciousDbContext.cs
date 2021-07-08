@@ -35,7 +35,8 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Events> Events { get; set; }
         public DbSet<EventParticipants> EventParticipants { get; set; }
         public DbSet<User> Users { get; set; }
-        public object User { get; internal set; }
+        public DbSet<Chat> Chat { get; set; }
+        public DbSet<ChatMsg> ChatMsg { get; set; }
 
         
 

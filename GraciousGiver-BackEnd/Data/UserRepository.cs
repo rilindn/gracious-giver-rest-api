@@ -35,6 +35,13 @@ namespace GraciousGiver_BackEnd.Data
 
             return user;
         }
+        public Organization ChangeOrgPsw(Organization org)
+        {
+            _context.Organization.Update(org);
+            org.OrganizationId = _context.SaveChanges();
+
+            return org;
+        }
 
         public object Generate(int userId)
         {
