@@ -16,10 +16,12 @@ namespace GraciousGiver_BackEnd.Controllers
     public class EventsController : ControllerBase
     {
         private readonly GraciousDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public EventsController(GraciousDbContext context)
+        public EventsController(GraciousDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: api/Events
@@ -121,6 +123,30 @@ namespace GraciousGiver_BackEnd.Controllers
         private bool EventExists(int id)
         {
             return _context.Events.Any(e => e.EventId == id);
+        }
+
+        [Route("SaveFile")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/Organization/Events/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

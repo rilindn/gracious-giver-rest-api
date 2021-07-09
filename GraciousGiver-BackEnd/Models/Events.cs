@@ -10,15 +10,17 @@ namespace GraciousGiver_BackEnd.Models
     {
         [Key]
         public int EventId { get; set; }
-
+        [Required]
         public String EventName { get; set; }
-
+        [Required]
         public String EventDescription { get; set; }
-
+        [Required]
         public String City { get; set; }
-
+        [Required]
+        public String Photo { get; set; }
+        [Required]
         public DateTime EventDate { get; set; }
-
+        [Required]
         public int OrganizationId { get; set; }
     }
 }
