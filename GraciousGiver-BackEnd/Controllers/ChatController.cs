@@ -55,6 +55,21 @@ namespace GraciousGiver_BackEnd.Controllers
 
             return not;
         }
+        
+        // GET: api/Chat/5
+        [HttpGet("check/{FId}/{SId}")]
+        public async Task<ActionResult<IEnumerable<Chat>>> GetChatByASId(int FId, int SId)
+        {
+            var not = await _context.Chat.Where(n=>(n.AcceptorId== FId && n.SenderId== SId)||
+            (n.AcceptorId == SId && n.SenderId == FId)).ToListAsync();
+
+            if (not == null)
+            {
+                return NotFound();
+            }
+
+            return not;
+        }
 
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
