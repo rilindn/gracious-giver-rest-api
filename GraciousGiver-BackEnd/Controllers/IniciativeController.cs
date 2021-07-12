@@ -17,10 +17,12 @@ namespace GraciousGiver_BackEnd.Controllers
     {
 
         private readonly GraciousDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public IniciativeController(GraciousDbContext context)
+        public IniciativeController(GraciousDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: api/Iniciative
@@ -122,6 +124,30 @@ namespace GraciousGiver_BackEnd.Controllers
         private bool IniciativeExists(int id)
         {
             return _context.Iniciative.Any(e => e.IniciativeId == id);
+        }
+
+        [Route("SaveFile")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/Organization/Initiative/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -38,11 +38,9 @@ namespace GraciousGiver_BackEnd.Data
         public DbSet<Chat> Chat { get; set; }
         public DbSet<ChatMsg> ChatMsg { get; set; }
         public DbSet<Iniciative> Iniciative { get; set; }
+        public DbSet<Donation> Donation { get; set; }
 
 
-
-
-        /* public object ProductRequestResponse { get; internal set; }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

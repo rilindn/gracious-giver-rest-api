@@ -17,7 +17,7 @@ namespace GraciousGiver_BackEnd.Models
         [Required]
         public int ReceiverId { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 10, ErrorMessage = "Response must be between 10 and 50 chars!")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Response must be between 3 and 50 chars!")]
         public String Response { get; set; }
         [Required]
         [StringLength(300, MinimumLength = 10, ErrorMessage = "Message must be between 10 and 300 chars!")]

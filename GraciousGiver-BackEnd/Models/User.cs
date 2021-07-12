@@ -14,10 +14,10 @@ namespace GraciousGiver_BackEnd.Models
         [Key]
         public int UserId { get; set; }
         [Required]
-        [RegularExpression(@"^[A-Z][A-Za-z]{5,50}$", ErrorMessage = "Firstname must be between 5 and 50 chars!")]
+        [RegularExpression(@"^[A-Z][A-Za-z]{2,50}$", ErrorMessage = "Firstname must be between 5 and 50 chars!")]
         public string Firstname { get; set; }
         [Required]
-        [RegularExpression(@"^[A-Z][A-Za-z]{5,50}$", ErrorMessage = "Lastname must be between 5 and 50 chars!")]
+        [RegularExpression(@"^[A-Z][A-Za-z]{2,50}$", ErrorMessage = "Lastname must be between 5 and 50 chars!")]
         public string Lastname { get; set; }
         [Required]
         [RegularExpression(@"^[A-Za-z][A-Za-z0-9_]{5,50}$", ErrorMessage = "Username must be between 5 and 50 chars!")]
