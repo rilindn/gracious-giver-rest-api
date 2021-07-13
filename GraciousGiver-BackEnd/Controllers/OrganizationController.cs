@@ -9,6 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+http://localhost:5000/api/organization/amount/12
+
+
+
+
+
+
 namespace GraciousGiver_BackEnd.Controllers
 {
     [Route("api/[controller]")]
