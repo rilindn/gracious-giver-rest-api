@@ -20,24 +20,24 @@ namespace GraciousGiver_BackEnd.Controllers
             _context = context;
         }
 
-        // GET: api/OrganizationMemberRequest
+        // GET: api/InitiativeRequest
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrganizationMemberRequest>>> GetOrganizationMemberRequest()
+        public async Task<ActionResult<IEnumerable<InitiativeRequest>>> GetInitiativeRequest()
         {
-            return await _context.OrganizationMemberRequest.Where(r => r.Checked == false).ToListAsync();
+            return await _context.InitiativeRequest.Where(r => r.Checked == false).ToListAsync();
         }
 
         [HttpGet("amount/{nr}")]
-        public async Task<ActionResult<IEnumerable<OrganizationMemberRequest>>> GetOrganizationMemberRequestByAmount(int nr)
+        public async Task<ActionResult<IEnumerable<InitiativeRequest>>> GetInitiativeRequestByAmount(int nr)
         {
-            return await _context.OrganizationMemberRequest.Where(r => r.Checked == false).Take(nr).ToListAsync();
+            return await _context.InitiativeRequest.Where(r => r.Checked == false).Take(nr).ToListAsync();
         }
 
-        // GET: api/OrganizationMemberRequest/5
+        // GET: api/InitiativeRequest/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrganizationMemberRequest>> GetOrganizationMemberRequest(int id)
+        public async Task<ActionResult<InitiativeRequest>> GetInitiativeRequest(int id)
         {
-            var om = await _context.OrganizationMemberRequest.FindAsync(id);
+            var om = await _context.InitiativeRequest.FindAsync(id);
 
             if (om == null)
             {
@@ -53,7 +53,7 @@ namespace GraciousGiver_BackEnd.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult>PutInitiativeRequest(int id,InitiativeRequest om)
         {
-            if (id != om.InitativeRequestId)
+            if (id != om.IniciativeRequestId)
             {
                 return BadRequest();
             }
@@ -83,33 +83,33 @@ namespace GraciousGiver_BackEnd.Controllers
             return new JsonResult("Invalid data!");
         }
 
-        // POST: api/OrganizationMemberRequest
+        // POST: api/InitiativeRequest
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<OrganizationMemberRequest>> PostOrganizationMemberRequest(OrganizationMemberRequest om)
+        public async Task<ActionResult<InitiativeRequest>> PostInitiativeRequest(InitiativeRequest om)
         {
             if (ModelState.IsValid)
             {
-                _context.OrganizationMemberRequest.Add(om);
+                _context.InitiativeRequest.Add(om);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetOrganizationMemberRequest", new { id = om.OrganizationMemberRequestId }, om);
+                return CreatedAtAction("GetInitiativeRequest", new { id = om.IniciativeRequestId }, om);
             }
             return new JsonResult("Invalid Organization Member data!");
         }
 
-        // DELETE: api/OrganizationMemberRequest/5
-        [HttpDelete("{id}/{orgId}")]
-        public async Task<ActionResult<OrganizationMemberRequest>> DeleteOrganizationMemberRequest(int id, int orgId)
+        // DELETE: api/InitiativeRequest/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<InitiativeRequest>> DeleteInitiativeRequest(int id)
         {
-            var om = _context.OrganizationMemberRequest.Where(r => r.OrganizationId == orgId && r.UserId == id).FirstOrDefault();
+            var om = _context.InitiativeRequest.Where(r => r.IniciativeRequestId == id).FirstOrDefault();
             if (om == null)
             {
                 return NotFound();
             }
 
-            _context.OrganizationMemberRequest.Remove((OrganizationMemberRequest)om);
+            _context.InitiativeRequest.Remove((InitiativeRequest)om);
             await _context.SaveChangesAsync();
 
             return new JsonResult("Organization Member Deleted  Succesfully!");
@@ -117,7 +117,7 @@ namespace GraciousGiver_BackEnd.Controllers
 
         private bool InitiativeRequestExists(int id)
         {
-            return _context.OrganizationMemberRequest.Any(e => e.OrganizationMemberRequestId == id);
+            return _context.InitiativeRequest.Any(e => e.IniciativeRequestId == id);
         }
     }
 
