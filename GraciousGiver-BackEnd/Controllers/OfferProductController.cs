@@ -162,36 +162,7 @@ namespace GraciousGiver_BackEnd.Controllers
         // PUT: api/OfferProduct/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("check/{id}")]
-        public async Task<IActionResult> PutOfferProductCheck(int id)
-        {
-            var prod = await _context.OfferProduct.FindAsync(id);
-
-            if (id != prod.OfferProductId)
-            {
-                return BadRequest();
-            }
-             _context.Entry(prod.CheckOffer==true).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OfferProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return new JsonResult("Offer checked!");
-        }
+        
 
         // POST: api/Request
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

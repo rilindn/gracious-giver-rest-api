@@ -34,6 +34,18 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.Donation.Take(nr).ToListAsync();
         }
 
+        [HttpGet("amount/{nr}/{InitiativeId}")]
+        public async Task<ActionResult<IEnumerable<Donation>>> GetDonationsByAmountInitiativeIdt(int nr, int InitiativeId)
+        {
+            return await _context.Donation.Where(e => e.Initiative == InitiativeId).Take(nr).ToListAsync();
+        }
+
+        [HttpGet("initiative/{InitiativeId}")]
+        public async Task<ActionResult<IEnumerable<Donation>>> GetAllEventParticipants(int InitiativeId)
+        {
+            return await _context.Donation.Where(e => e.Initiative == InitiativeId).ToListAsync();
+        }
+
         // GET: api/Donation/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Donation>> GetDonation(int id)

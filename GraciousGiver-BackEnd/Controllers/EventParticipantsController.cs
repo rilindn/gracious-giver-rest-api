@@ -45,6 +45,19 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.EventParticipants.Where(e => e.EventId == EventId).ToListAsync();
         }
 
+        [HttpGet("joined/{userid}")]
+        public async Task<ActionResult<EventParticipants>> CheckJoinedEventParticipant(int userid)
+        {
+            var om = await _context.EventParticipants.Where(o => o.ParticipantId == userid).FirstOrDefaultAsync();
+
+            if (om == null)
+            {
+                return NotFound();
+            }
+
+            return om;
+        }
+
         // GET: api/EventParticipants/5
         [HttpGet("{id}")]
         public async Task<ActionResult<EventParticipants>> GetEventParticipants(int id)
