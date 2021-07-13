@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 
 namespace GraciousGiver_BackEnd.Models
 {
-    public class Events
+    public class Iniciative
     {
         [Key]
-        public int EventId { get; set; }
+        public int IniciativeId { get; set; }
         [Required]
-        public String EventName { get; set; }
+        public string IniciativeName { get; set; }
         [Required]
-        public String EventDescription { get; set; }
+        public string IniciativeDescription { get; set; }
         [Required]
-        public String City { get; set; }
+        public string IniciativePhoto { get; set; }
         [Required]
-        public String Photo { get; set; }
-        [Required]
-        public DateTime EventDate { get; set; }
+        public DateTime IniciativeDate { get; set; }
         [Required]
         public int OrganizationId { get; set; }
+        public int ReceiverId { get; set; }
     }
 }

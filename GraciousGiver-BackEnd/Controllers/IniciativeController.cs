@@ -13,58 +13,59 @@ namespace GraciousGiver_BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventsController : ControllerBase
+    public class IniciativeController : ControllerBase
     {
+
         private readonly GraciousDbContext _context;
         private readonly IWebHostEnvironment _env;
 
-        public EventsController(GraciousDbContext context, IWebHostEnvironment env)
+        public IniciativeController(GraciousDbContext context, IWebHostEnvironment env)
         {
             _context = context;
             _env = env;
         }
 
-        // GET: api/Events
+        // GET: api/Iniciative
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Events>>> GetEvent()
+        public async Task<ActionResult<IEnumerable<Iniciative>>> GetIniciative()
         {
-            return await _context.Events.ToListAsync();
+            return await _context.Iniciative.ToListAsync();
         }
 
-        // GET: api/Events/5
+        // GET: api/Iniciative/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Events>> GetEvents(int id)
+        public async Task<ActionResult<Iniciative>> GetIniciative(int id)
         {
-            var ev = await _context.Events.FindAsync(id);
+            var inc = await _context.Iniciative.FindAsync(id);
 
-            if (ev == null)
+            if (inc == null)
             {
                 return NotFound();
             }
 
-            return ev;
+            return inc;
         }
 
         [HttpGet("{amount}/{nr}")]
-        public async Task<ActionResult<IEnumerable<Events>>> GetEventsByAmount(int nr)
+        public async Task<ActionResult<IEnumerable<Iniciative>>> GetIniciativeByAmount(int nr)
         {
-            return await _context.Events.Take(nr).ToListAsync();
+            return await _context.Iniciative.Take(nr).ToListAsync();
         }
 
-        // PUT: api/Events/5
+        // PUT: api/Iniciative/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvents(int id, Events ev)
+        public async Task<IActionResult> PutIniciative(int id, Iniciative inc)
         {
-            if (id != ev.EventId)
+            if (id != inc.IniciativeId)
             {
                 return BadRequest();
             }
             if (ModelState.IsValid)
             {
 
-                _context.Entry(ev).State = EntityState.Modified;
+                _context.Entry(inc).State = EntityState.Modified;
 
                 try
                 {
@@ -73,7 +74,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists(id))
+                    if (!IniciativeExists(id))
                     {
                         return NotFound();
                     }
@@ -83,46 +84,46 @@ namespace GraciousGiver_BackEnd.Controllers
                     }
                 }
 
-                return new JsonResult("Event Updated Succesfully!");
+                return new JsonResult("Iniciative Updated Succesfully!");
             }
-            return new JsonResult("Invalid Event data!");
+            return new JsonResult("Invalid Iniciative data!");
         }
 
         // POST: api/Events
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Events>> PostEvents(Events ev)
+        public async Task<ActionResult<Iniciative>> PostIniciative(Iniciative inc)
         {
             if (ModelState.IsValid)
             {
-                _context.Events.Add(ev);
+                _context.Iniciative.Add(inc);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetEvents", new { id = ev.EventId }, ev);
+                return CreatedAtAction("GetIniciative", new { id = inc.IniciativeId }, inc);
             }
-            return new JsonResult("Invalid Event data!");
+            return new JsonResult("Invalid Iniciative data!");
         }
 
         // DELETE: api/Events/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Events>> DeleteEvents(int id)
+        public async Task<ActionResult<Iniciative>> DeleteIniciative(int id)
         {
-            var ev = await _context.Events.FindAsync(id);
-            if (ev == null)
+            var inc = await _context.Iniciative.FindAsync(id);
+            if (inc == null)
             {
                 return NotFound();
             }
 
-            _context.Events.Remove(ev);
+            _context.Iniciative.Remove(inc);
             await _context.SaveChangesAsync();
 
-            return new JsonResult("Event Deleted  Succesfully!");
+            return new JsonResult("Iniciative Deleted  Succesfully!");
         }
 
-        private bool EventExists(int id)
+        private bool IniciativeExists(int id)
         {
-            return _context.Events.Any(e => e.EventId == id);
+            return _context.Iniciative.Any(e => e.IniciativeId == id);
         }
 
         [Route("SaveFile")]
@@ -134,7 +135,7 @@ namespace GraciousGiver_BackEnd.Controllers
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
                 string filename = postedFile.FileName;
-                var physicalPath = _env.ContentRootPath + "/Photos/Organization/Events/" + filename;
+                var physicalPath = _env.ContentRootPath + "/Photos/Organization/Initiative/" + filename;
 
                 using (var stream = new FileStream(physicalPath, FileMode.Create))
                 {

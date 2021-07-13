@@ -10,10 +10,10 @@ namespace GraciousGiver_BackEnd.Dtos
     public class RegisterDto
     {
         [Required]
-        [RegularExpression(@"^[A-Z][A-Za-z]{3,20}$", ErrorMessage = "Firstname must be between 3 and 20 chars!")]
+        [RegularExpression(@"^[A-Z][A-Za-z]{2,20}$", ErrorMessage = "Firstname must be between 2 and 20 chars!")]
         public string Firstname { get; set; }
         [Required]
-        [RegularExpression(@"^[A-Z][A-Za-z]{3,20}$", ErrorMessage = "Lastname must be between 3 and 20 chars!")]
+        [RegularExpression(@"^[A-Z][A-Za-z]{2,20}$", ErrorMessage = "Lastname must be between 2 and 20 chars!")]
         public string Lastname { get; set; }
         [Required]
         [RegularExpression(@"^[A-Za-z][A-Za-z0-9_]{7,30}$", ErrorMessage = "Username must be between 7 and 30 chars!")] 

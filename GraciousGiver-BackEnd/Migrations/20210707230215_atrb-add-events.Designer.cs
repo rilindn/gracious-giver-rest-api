@@ -4,14 +4,16 @@ using GraciousGiver_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraciousGiver_BackEnd.Migrations
 {
     [DbContext(typeof(GraciousDbContext))]
-    partial class GraciousDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210707230215_atrb-add-events")]
+    partial class atrbaddevents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,52 +39,6 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.ToTable("Bookmark");
                 });
 
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.Chat", b =>
-                {
-                    b.Property<int>("ChatId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AcceptorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ChatId");
-
-                    b.ToTable("Chat");
-                });
-
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.ChatMsg", b =>
-                {
-                    b.Property<int>("MessageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AcceptorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Chat")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("msgDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("MessageId");
-
-                    b.ToTable("ChatMsg");
-                });
-
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.City", b =>
                 {
                     b.Property<int>("CityId")
@@ -97,30 +53,6 @@ namespace GraciousGiver_BackEnd.Migrations
                     b.HasKey("CityId");
 
                     b.ToTable("City");
-                });
-
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.Donation", b =>
-                {
-                    b.Property<int>("DonationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Donator")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Initiative")
-                        .HasColumnType("int");
-
-                    b.HasKey("DonationId");
-
-                    b.ToTable("Donation");
                 });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.EventParticipants", b =>
@@ -149,63 +81,23 @@ namespace GraciousGiver_BackEnd.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EventDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Photo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EventId");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("GraciousGiver_BackEnd.Models.Iniciative", b =>
-                {
-                    b.Property<int>("IniciativeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("IniciativeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("IniciativeDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IniciativeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IniciativePhoto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("int");
-
-                    b.HasKey("IniciativeId");
-
-                    b.ToTable("Iniciative");
                 });
 
             modelBuilder.Entity("GraciousGiver_BackEnd.Models.Notifications", b =>
