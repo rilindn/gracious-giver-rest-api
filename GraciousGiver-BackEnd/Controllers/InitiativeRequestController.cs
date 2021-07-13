@@ -21,16 +21,16 @@ namespace GraciousGiver_BackEnd.Controllers
         }
 
         // GET: api/InitiativeRequest
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<InitiativeRequest>>> GetInitiativeRequest()
+        [HttpGet("{orgId}")]
+        public async Task<ActionResult<IEnumerable<InitiativeRequest>>> GetInitiativeRequestByOrgId( int orgId)
         {
-            return await _context.InitiativeRequest.Where(r => r.Checked == false).ToListAsync();
+            return await _context.InitiativeRequest.Where(r => r.Checked == false && r.OrganizationId == orgId).ToListAsync();
         }
 
-        [HttpGet("amount/{nr}")]
-        public async Task<ActionResult<IEnumerable<InitiativeRequest>>> GetInitiativeRequestByAmount(int nr)
+        [HttpGet("amount/{nr}/{orgId}")]
+        public async Task<ActionResult<IEnumerable<InitiativeRequest>>> GetInitiativeRequestByAmount(int nr,int orgId)
         {
-            return await _context.InitiativeRequest.Where(r => r.Checked == false).Take(nr).ToListAsync();
+            return await _context.InitiativeRequest.Where(r => r.Checked == false && r.OrganizationId==orgId).Take(nr).ToListAsync();
         }
 
         // GET: api/InitiativeRequest/5
@@ -112,7 +112,7 @@ namespace GraciousGiver_BackEnd.Controllers
             _context.InitiativeRequest.Remove((InitiativeRequest)om);
             await _context.SaveChangesAsync();
 
-            return new JsonResult("Organization Member Deleted  Succesfully!");
+            return new JsonResult("Organization Member Deleted Succesfully!");
         }
 
         private bool InitiativeRequestExists(int id)
