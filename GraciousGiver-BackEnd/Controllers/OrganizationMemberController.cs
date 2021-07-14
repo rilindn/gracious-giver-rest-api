@@ -33,6 +33,7 @@ namespace GraciousGiver_BackEnd.Controllers
             return await _context.OrganizationMember.Take(nr).ToListAsync();
         }
 
+
         // GET: api/OrganizationMember/5
         [HttpGet("{id}")]
         public async Task<ActionResult<OrganizationMember>> GetOrganizationMember(int id)
@@ -48,16 +49,16 @@ namespace GraciousGiver_BackEnd.Controllers
         }
         
         [HttpGet("joined/{orgid}/{userid}")]
-        public async Task<ActionResult<OrganizationMember>> GetJoinedOrganizationMember(int orgid, int userid)
+        public Boolean GetJoinedOrganizationMember(int orgid, int userid)
         {
-            var om = await  _context.OrganizationMember.Where(o => o.OrganizationId == orgid && o.UserId == userid).FirstOrDefaultAsync();
+            var om =  _context.OrganizationMember.Where(o => o.OrganizationId == orgid && o.UserId == userid).FirstOrDefault();
 
             if (om == null)
             {
-                return NotFound();
+                return false;
             }
 
-            return om;
+            return true;
         }
 
 

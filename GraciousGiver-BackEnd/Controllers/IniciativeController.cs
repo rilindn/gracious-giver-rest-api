@@ -46,10 +46,17 @@ namespace GraciousGiver_BackEnd.Controllers
             return inc;
         }
 
+
         [HttpGet("{amount}/{nr}")]
         public async Task<ActionResult<IEnumerable<Iniciative>>> GetIniciativeByAmount(int nr)
         {
             return await _context.Iniciative.Take(nr).ToListAsync();
+        }
+
+        [HttpGet("org/{id}")]
+        public async Task<ActionResult<IEnumerable<Iniciative>>> GetIniciativeByOrgId(int id)
+        {
+            return await _context.Iniciative.Where(e => e.OrganizationId == id).ToListAsync();
         }
 
         // PUT: api/Iniciative/5

@@ -45,10 +45,16 @@ namespace GraciousGiver_BackEnd.Controllers
             return ev;
         }
 
-        [HttpGet("{amount}/{nr}")]
+        [HttpGet("amount/{nr}")]
         public async Task<ActionResult<IEnumerable<Events>>> GetEventsByAmount(int nr)
         {
             return await _context.Events.Take(nr).ToListAsync();
+        }
+
+        [HttpGet("org/{id}")]
+        public async Task<ActionResult<IEnumerable<Events>>> GetEventsByOrgId(int id)
+        {
+            return await _context.Events.Where(e=>e.OrganizationId==id).ToListAsync();
         }
 
         // PUT: api/Events/5
