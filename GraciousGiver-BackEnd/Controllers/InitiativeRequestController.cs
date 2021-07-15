@@ -21,7 +21,7 @@ namespace GraciousGiver_BackEnd.Controllers
         }
 
         // GET: api/InitiativeRequest
-        [HttpGet("{orgId}")]
+        [HttpGet("org/{orgId}")]
         public async Task<ActionResult<IEnumerable<InitiativeRequest>>> GetInitiativeRequestByOrgId( int orgId)
         {
             return await _context.InitiativeRequest.Where(r => r.Checked == false && r.OrganizationId == orgId).ToListAsync();
